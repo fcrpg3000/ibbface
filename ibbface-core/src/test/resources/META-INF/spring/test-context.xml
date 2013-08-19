@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013. ibbface.com All rights reserved.
+  ~ @(#) test-context.xml 2013-07-29 23:06
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:property-placeholder location="classpath:/META-INF/spring/*.properties"/>
+
+    <context:component-scan base-package="com.ibbface.base.storage, com.ibbface.service"
+                            use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+    <!-- System.out.println & System.err.println handling through SLF4J -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J"/>
+        <property name="staticMethod"
+                  value="uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J.sendSystemOutAndErrToSLF4J"/>
+        <property name="arguments">
+            <list>
+                <!-- Set log level for System.out -->
+                <util:constant
+                        static-field="uk.org.lidalia.sysoutslf4j.context.LogLevel.DEBUG"/>
+                <!-- Set log level for System.err -->
+                <util:constant
+                        static-field="uk.org.lidalia.sysoutslf4j.context.LogLevel.ERROR"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Initialize testing database (Memory db) -->
+    <bean id="derbyDBFactory" class="com.ibbface.base.storage.HSQLDBFactory"
+          factory-method="getFactory" init-method="initialize">
+        <property name="databaseUrl" value="${testDataSource.jdbcUrl}"/>
+        <property name="username" value="${testDataSource.username}"/>
+        <property name="password" value="${testDataSource.password}"/>
+        <property name="tableDDLs">
+            <list>
+                <value>${test.table.ibb_user}</value>
+                <value>${test.table.ibb_forum}</value>
+                <value>${test.table.ibb_thread}</value>
+                <value>${test.table.ibb_user_online}</value>
+                <value>${test.table.ibb_api_resource}</value>
+                <value>${test.table.ibb_api_param}</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="testDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${testDataSource.jdbcUrl}"/>
+        <property name="username" value="${testDataSource.username}"/>
+        <property name="password" value="${testDataSource.password}"/>
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${testDataSource.initialSize}"/>
+        <property name="minIdle" value="${testDataSource.minIdle}"/>
+        <property name="maxActive" value="${testDataSource.maxActive}"/>
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${testDataSource.maxWait}"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        <property name="validationQuery" value="VALUES (CURRENT_TIMESTAMP)"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <!--property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/-->
+
+        <!-- 配置监控统计拦截的filters。状态统计：stat，日常记录：slf4j -->
+        <property name="filters" value="stat,slf4j"/>
+    </bean>
+
+    <bean id="queryDslJdbcTemplate" class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+        <constructor-arg ref="testDataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="testDataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>
