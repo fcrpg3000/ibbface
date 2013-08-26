@@ -53,7 +53,7 @@ public abstract class BaseUser extends AbstractEntity<Long, User>
     private String smallAvatarUri;
     private String thumbAvatarUri;
     private String spareEmail;
-    private String roleData;
+    private Integer roleData;
     private boolean isActivated;
     private boolean isDisabled;
     private Date disabledStart;
@@ -208,11 +208,11 @@ public abstract class BaseUser extends AbstractEntity<Long, User>
         this.spareEmail = spareEmail;
     }
 
-    public String getRoleData() {
+    public Integer getRoleData() {
         return roleData;
     }
 
-    public void setRoleData(String roleData) {
+    public void setRoleData(Integer roleData) {
         this.roleData = roleData;
     }
 

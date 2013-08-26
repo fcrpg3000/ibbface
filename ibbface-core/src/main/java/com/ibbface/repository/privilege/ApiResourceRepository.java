@@ -19,6 +19,10 @@ import java.util.List;
  */
 public interface ApiResourceRepository extends BaseRepository<ApiResource, Integer> {
 
+    public List<ApiResource> findByRoleId(Integer roleId);
+
+    public List<ApiResource> findByRoleIds(Iterable<Integer> roleIds);
+
     /**
      * Query and Returns a {@link ApiResource} of the specified {@code version}
      * and {@code basePath}, or {@code null} if not exists.

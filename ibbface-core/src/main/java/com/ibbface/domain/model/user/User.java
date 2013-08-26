@@ -5,9 +5,7 @@
 
 package com.ibbface.domain.model.user;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
-import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 import com.ibbface.domain.model.user.base.BaseUser;
 import com.ibbface.util.RandomStrings;
@@ -18,7 +16,6 @@ import java.util.Date;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Strings.emptyToNull;
 
 /**
  * User (Account) Entity.
@@ -124,13 +121,10 @@ public class User extends BaseUser {
     }
 
     @Override
-    public void setRoleData(String roleData) {
-        super.setRoleData((roleData = emptyToNull(roleData)));
-        if (roleData != null && (roleData = roleData.trim()).length() > 0) {
-            if (roles == null) {
-                roles = Sets.newLinkedHashSet();
-            }
-            UserRole.names2Roles(Splitter.on(",").split(roleData), roles);
+    public void setRoleData(Integer roleData) {
+        super.setRoleData(roleData);
+        if (roleData != null) {
+            roles = UserRole.fromRoleData(roleData);
         }
     }
 
@@ -141,8 +135,7 @@ public class User extends BaseUser {
     public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
         if (roles != null && roles.size() > 0) {
-            super.setRoleData(Joiner.on(",").skipNulls().join(
-                    UserRole.toRoleNames(roles)));
+            super.setRoleData(UserRole.toRoleData(roles));
         }
     }
 

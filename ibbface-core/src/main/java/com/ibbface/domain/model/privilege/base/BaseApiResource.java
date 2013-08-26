@@ -19,6 +19,7 @@ public abstract class BaseApiResource extends AbstractEntity<Integer, ApiResourc
     private static final long serialVersionUID = 1L;
 
     public static final String PROP_PARENT_ID = "parentId";
+    public static final String PROP_ROLE_DATA = "roleData";
     public static final String PROP_BASE_PATH = "basePath";
     public static final String PROP_DESCRIPTION = "description";
     public static final String PROP_VERSION = "version";
@@ -30,6 +31,7 @@ public abstract class BaseApiResource extends AbstractEntity<Integer, ApiResourc
     public static final String PROP_IS_ENABLED = "enabled";
 
     private Integer parentId;
+    private Integer roleData;
     private String basePath;
     private String description;
     private String version;
@@ -50,11 +52,12 @@ public abstract class BaseApiResource extends AbstractEntity<Integer, ApiResourc
         parentId = 0;
     }
 
-    protected BaseApiResource(Integer parentId, String basePath, String description,
-                              String version, Short gradeCode, String httpMethod,
-                              String dataType, String others, boolean requireLogin,
-                              boolean enabled) {
+    protected BaseApiResource(Integer parentId, Integer roleData, String basePath,
+                              String description, String version, Short gradeCode,
+                              String httpMethod, String dataType, String others,
+                              boolean requireLogin, boolean enabled) {
         this.parentId = parentId;
+        this.roleData = roleData;
         this.basePath = basePath;
         this.description = description;
         this.version = version;
@@ -73,6 +76,14 @@ public abstract class BaseApiResource extends AbstractEntity<Integer, ApiResourc
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    public Integer getRoleData() {
+        return roleData;
+    }
+
+    public void setRoleData(Integer roleData) {
+        this.roleData = roleData;
     }
 
     public String getBasePath() {
@@ -160,6 +171,7 @@ public abstract class BaseApiResource extends AbstractEntity<Integer, ApiResourc
         return Objects.toStringHelper(getClass())
                 .add(PROP_ID, getId())
                 .add(PROP_PARENT_ID, getParentId())
+                .add(PROP_ROLE_DATA, getRoleData())
                 .add(PROP_BASE_PATH, getBasePath())
                 .add(PROP_DESCRIPTION, getDescription())
                 .add(PROP_VERSION, getVersion())

@@ -45,7 +45,7 @@ public class LocalCacheMultiThreadsTest {
                             LOGGER.debug("RemovalCause = REPLACED, ignored.");
                             return;
                         }
-                        LOGGER.info("The entry({}, {}) was removed.",
+                        LOGGER.debug("The entry({}, {}) was removed.",
                                 notification.getKey(), notification.getValue());
                     }
                 })
@@ -108,10 +108,6 @@ public class LocalCacheMultiThreadsTest {
                 if (v >= 0 && v <= 9) {
                     Assert.assertNotNull(data);
                     Assert.assertThat(data, Is.is(key));
-                } else {
-                    if (data != null) {
-                        LOGGER.info("Found new entry: {} = {}", key, data);
-                    }
                 }
             }
             stopwatch.stop();

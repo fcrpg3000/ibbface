@@ -5,6 +5,7 @@
 
 package com.ibbface.base.storage.jdbc;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.privilege.QApiResource;
@@ -15,6 +16,7 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.stereotype.Repository;
 
@@ -49,6 +51,34 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
                 return delete.execute();
             }
         });
+    }
+
+    @Override
+    public List<ApiResource> findByRoleId(Integer roleId) {
+        checkArgument(roleId != null && roleId > 0,
+                "The given `roleId` must not be null or negative.");
+        assert roleId != null && roleId > 0;
+        final SQLQuery sqlQuery = getQuery().where(
+                qApiResource.roleData.mod(roleId).eq(0));
+        return queryForList(sqlQuery);
+    }
+
+    @Override
+    public List<ApiResource> findByRoleIds(Iterable<Integer> roleIds) {
+        checkArgument(roleIds != null && Iterables.size(roleIds) > 0,
+                "The given `roleIds` must not be null or empty.");
+        assert roleIds != null;
+        final SQLQuery sqlQuery = getQuery();
+        BooleanExpression be = null;
+        for (Integer roleId : roleIds) {
+            if (be == null) {
+                be = qApiResource.roleData.mod(roleId).eq(0);
+            } else {
+                be.or(qApiResource.roleData.mod(roleId).eq(0));
+            }
+        }
+        sqlQuery.where(be);
+        return queryForList(sqlQuery);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class QUser extends com.mysema.query.sql.RelationalPathBase<QUser> {
 
     public final StringPath spareEmail = createString("SPARE_EMAIL");
 
-    public final StringPath roleData = createString("ROLE_DATA");
+    public final NumberPath<Integer> roleData = createNumber("ROLE_DATA", Integer.class);
 
     public final BooleanPath isActivated = createBoolean("IS_ACTIVATED");
 

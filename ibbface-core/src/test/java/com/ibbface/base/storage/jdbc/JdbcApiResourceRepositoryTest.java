@@ -13,6 +13,7 @@ import com.ibbface.domain.model.privilege.ApiParam;
 import com.ibbface.domain.model.privilege.ApiResource;
 import com.ibbface.domain.model.privilege.Grade;
 import com.ibbface.domain.model.privilege.ParameterType;
+import com.ibbface.domain.model.user.UserRole;
 import org.hamcrest.core.Is;
 import org.junit.After;
 import org.junit.Before;
@@ -26,6 +27,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -53,7 +55,8 @@ public class JdbcApiResourceRepositoryTest {
     private Set<ApiParam> commonParams, showUserParams, chpwdParams;
 
     // comments api resource
-    private ApiResource commentApi, createComment, showComment, showComment2;
+    private ApiResource commentApi, createComment,
+            showComment, showComment2, delComment;
 
     @Before
     public void setUp() throws Exception {
@@ -68,12 +71,15 @@ public class JdbcApiResourceRepositoryTest {
         // Users API resource
         userApi = ApiResource.parent("/users", "用户接口", "1", Grade.NORMAL,
                 ApiResource.GET, null, true, true);
+        userApi.setRoles(Sets.newHashSet(UserRole.ROLE_USER));
         apiResourceRepository.save(userApi);
 
         showUser = ApiResource.sub(userApi, "/users/show", "获取用户信息", Grade.NORMAL,
                 ApiResource.GET, null, true, true);
         chpwd = ApiResource.sub(userApi, "/users/chpwd", "修改登录密码", Grade.NORMAL,
                 ApiResource.POST, null, true, true);
+        showUser.setRoleData(UserRole.NOT_GUEST);
+        chpwd.setRoleData(UserRole.NOT_GUEST);
         apiResourceRepository.save(Lists.newArrayList(showUser, chpwd));
 
         // Comment API resource
@@ -87,9 +93,17 @@ public class JdbcApiResourceRepositoryTest {
                 Grade.NORMAL, ApiResource.GET, null, true, true);
         showComment2 = ApiResource.sub(commentApi, "/comments/show", "获取某个资源的评论列表",
                 Grade.NORMAL, ApiResource.GET, null, true, true);
+        delComment = ApiResource.sub(commentApi, "/comments/delete", "删除指定的评论",
+                Grade.ADVANCED, ApiResource.POST, null, true, true);
         showComment2.setVersion("2");
+        createComment.setRoleData(UserRole.NOT_GUEST);
+        Set<UserRole> allRoles = Sets.newHashSet(UserRole.all());
+        showComment.setRoles(allRoles);
+        showComment2.setRoles(allRoles);
+        delComment.setRoles(Sets.newHashSet(UserRole.ADMIN_USER,
+                UserRole.SUPER_USER));
         apiResourceRepository.save(Lists.newArrayList(createComment,
-                showComment, showComment2));
+                showComment, showComment2, delComment));
     }
 
     private void setUpCommonParams() {
@@ -133,6 +147,35 @@ public class JdbcApiResourceRepositoryTest {
     }
 
     @Test
+    public void testFindByRoleId() throws Exception {
+        List<ApiResource> list = apiResourceRepository.findByRoleId(
+                UserRole.ROLE_USER.getId());
+        assertNotNull(list);
+        assertTrue(list.size() > 0);
+        assertFalse(list.contains(delComment));
+
+        list = apiResourceRepository.findByRoleId(UserRole.GUEST.getId());
+        assertNotNull(list);
+        assertTrue(list.contains(showComment));
+        assertTrue(list.contains(showComment2));
+        assertTrue(list.contains(commentApi));
+    }
+
+    @Test
+    public void testFindByRoleIds() throws Exception {
+        List<ApiResource> list = apiResourceRepository.findByRoleIds(
+                Sets.newHashSet(UserRole.ROLE_USER.getId(),
+                        UserRole.GUEST.getId()));
+        assertNotNull(list);
+        assertTrue(list.size() > 0);
+        assertTrue(list.contains(commentApi));
+        assertTrue(list.contains(showComment));
+        assertTrue(list.contains(showComment2));
+
+        assertFalse(list.contains(delComment));
+    }
+
+    @Test
     public void testFindByVersionAndBasePath() throws Exception {
         ApiResource exists = apiResourceRepository.findByVersionAndBasePath(showComment.getVersion(),
                 showComment.getBasePath());
@@ -166,7 +209,7 @@ public class JdbcApiResourceRepositoryTest {
 
         subList = apiResourceRepository.findByParentId(commentApi.getId());
         assertNotNull(subList);
-        assertTrue(subList.size() == 3);
+        assertTrue(subList.size() == 4);
         assertTrue(subList.contains(showComment) && subList.contains(createComment) &&
                 subList.contains(showComment2));
     }

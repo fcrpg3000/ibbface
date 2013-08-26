@@ -10,7 +10,22 @@
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%.-5level|%-40.40logger{0}|%msg%n</pattern>
+            <pattern>%-5level|%-40.40logger{0}|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="defaultFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
+        <file>${user.dir}/logs/ibbface_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/ibbface_info/%d{yyyy/MM/dd/yyyy-MM-dd}.log.zip</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level|${yyyy-MM-dd HH:mm:ss.SSS}|%-15thread|%-40.40logger{0}|%msg%n</pattern>
         </encoder>
     </appender>
 

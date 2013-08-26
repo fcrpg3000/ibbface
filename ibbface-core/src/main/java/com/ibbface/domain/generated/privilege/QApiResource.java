@@ -39,6 +39,8 @@ public class QApiResource extends com.mysema.query.sql.RelationalPathBase<QApiRe
 
     public final NumberPath<Integer> parentId = createNumber("PARENT_ID", Integer.class);
 
+    public final NumberPath<Integer> roleData = createNumber("ROLE_DATA", Integer.class);
+
     public final StringPath basePath = createString("BASE_PATH");
 
     public final StringPath description = createString("DESCRIPTION");
@@ -62,7 +64,7 @@ public class QApiResource extends com.mysema.query.sql.RelationalPathBase<QApiRe
     public final PrimaryKey<QApiResource> primary = createPrimaryKey(id);
 
     public final Path<?>[] sequenceColumns = new Path<?>[]{
-            id, parentId, basePath, description, version, gradeCode,
+            id, parentId, roleData, basePath, description, version, gradeCode,
             httpMethod, dataType, others, requireLogin, isEnabled, createdTime
     };
 
@@ -88,6 +90,7 @@ public class QApiResource extends com.mysema.query.sql.RelationalPathBase<QApiRe
         ImmutableMap.Builder<String, Path<?>> builder = ImmutableMap.builder();
         return builder.put(PROP_ID, id)
                 .put(PROP_PARENT_ID, parentId)
+                .put(PROP_ROLE_DATA, roleData)
                 .put(PROP_BASE_PATH, basePath)
                 .put(PROP_DESCRIPTION, description)
                 .put(PROP_VERSION, version)

@@ -5,11 +5,15 @@
 
 package com.ibbface.domain.model.privilege;
 
+import com.google.common.base.Joiner;
 import com.ibbface.domain.model.privilege.base.BaseApiResource;
+import com.ibbface.domain.model.user.UserRole;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * The api resource entity class.
@@ -32,8 +36,9 @@ public class ApiResource extends BaseApiResource {
         if (parent != null) {
             parentId = parent.getId();
         }
-        ApiResource resource = new ApiResource(parentId, basePath, description, version,
-                grade.getCode(), httpMethod, "JSON", others, requireLogin, enabled);
+        ApiResource resource = new ApiResource(parentId, UserRole.GUEST.getId(),
+                basePath, description, version, grade.getCode(), httpMethod,
+                "JSON", others, requireLogin, enabled);
         return resource;
     }
 
@@ -54,6 +59,7 @@ public class ApiResource extends BaseApiResource {
     private ApiResource parent;
     private Grade grade;
     private Set<ApiParam> params;
+    private Set<UserRole> roles;
 
     public ApiResource() {
         super();
@@ -63,11 +69,11 @@ public class ApiResource extends BaseApiResource {
         super(id);
     }
 
-    public ApiResource(Integer parentId, String basePath, String description,
-                       String version, Short accessGrade, String httpMethod,
-                       String dataType, String others, boolean requireLogin,
-                       boolean enabled) {
-        super(parentId, basePath, description, version, accessGrade,
+    public ApiResource(Integer parentId, Integer roleData, String basePath,
+                       String description, String version, Short accessGrade,
+                       String httpMethod, String dataType, String others,
+                       boolean requireLogin, boolean enabled) {
+        super(parentId, roleData, basePath, description, version, accessGrade,
                 httpMethod, dataType, others, requireLogin, enabled);
     }
 
@@ -109,6 +115,25 @@ public class ApiResource extends BaseApiResource {
         this.params = params;
     }
 
+    @Override
+    public void setRoleData(Integer roleData) {
+        super.setRoleData(roleData);
+        if (roleData != null) {
+            roles = UserRole.fromRoleData(roleData);
+        }
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+        if (roles != null && roles.size() > 0) {
+            super.setRoleData(UserRole.toRoleData(roles));
+        }
+    }
+
     /**
      * 使用给定的实体，更新当前实体的信息。通常是已改变的属性的变更。
      *
@@ -121,14 +146,22 @@ public class ApiResource extends BaseApiResource {
         return null;
     }
 
-    public String getURL(final String urlPrefix) {
-        return String.format("%s/%s/%s", urlPrefix, getVersion(), getBasePath());
+    /**
+     * Returns a URI string of this resource of the specified {@code url}.
+     *
+     * @param url the api url prefix. like https://api.ibbface.com
+     * @return a uri string of this resource.
+     */
+    public String getURIString(final String url) {
+        checkArgument(url != null && url.length() > 0,
+                "The given url prefix must be not null or empty.");
+        return Joiner.on("/").join(url, getVersion(), getBasePath());
     }
 
     public Object[] toArray() {
         return new Object[]{
-                getId(), getParentId(), getBasePath(), getDescription(), getVersion(),
-                getGradeCode(), getHttpMethod(), getDataType(),
+                getId(), getParentId(), getRoleData(), getBasePath(), getDescription(),
+                getVersion(), getGradeCode(), getHttpMethod(), getDataType(),
                 getOthers(), isRequireLogin(), isEnabled(), getCreatedTime()
         };
     }

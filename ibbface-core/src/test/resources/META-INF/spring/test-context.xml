@@ -23,6 +23,11 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
+    <bean id="slf4JBridgeHandler" class="org.slf4j.bridge.SLF4JBridgeHandler"
+            init-method="removeHandlersForRootLogger" />
+    <bean class="org.slf4j.bridge.SLF4JBridgeHandler" init-method="install"
+          depends-on="slf4JBridgeHandler" />
+
     <!-- System.out.println & System.err.println handling through SLF4J -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J"/>
