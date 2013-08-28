@@ -157,7 +157,7 @@ public final class AppContext implements Serializable {
 
     public static void setAccessToken(String accessToken) {
         AppContext ctx = getContext();
-        if (ctx == null) {
+        if (ctx == null || accessToken == null) {
             return;
         }
         ctx.attributes.put(KEY_OF_ACCESS_TOKEN, accessToken);

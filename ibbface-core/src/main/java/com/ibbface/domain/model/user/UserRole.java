@@ -99,6 +99,10 @@ public class UserRole extends AbstractValueObject<UserRole> {
         return ALL_ENTRIES.get(id);
     }
 
+    public static Integer findId(String name) {
+        return NAME_ID_MAP.get(name);
+    }
+
     /**
      * Returns all {@link UserRole}s list.
      */

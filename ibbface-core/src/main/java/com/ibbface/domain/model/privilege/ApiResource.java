@@ -134,6 +134,13 @@ public class ApiResource extends BaseApiResource {
         }
     }
 
+    public boolean containsRole(String roleName) {
+        if (roleName == null || roleName.length() == 0) {
+            return false;
+        }
+        return UserRole.findId(roleName) != null;
+    }
+
     /**
      * 使用给定的实体，更新当前实体的信息。通常是已改变的属性的变更。
      *
