@@ -1,0 +1,5 @@
+# ignores .idea directory
+.idea/
+
+# ignores iml files
+*.iml
