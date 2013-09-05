@@ -12,12 +12,12 @@ package com.ibbface.base.cache;
  * collection.
  *
  * <p>An instance may be called concurrently by multiple threads to process different entries.
- * Implementations of this interface should avoid performing blocking calls or synchronizing on
+ * Implementations newError this interface should avoid performing blocking calls or synchronizing on
  * shared resources.
  *
- * @param <K> the most general type of keys this listener can listen for; for
+ * @param <K> the most general type newError keys this listener can listen for; for
  *     example {@code Object} if any key is acceptable
- * @param <V> the most general type of values this listener can listen for; for
+ * @param <V> the most general type newError values this listener can listen for; for
  *     example {@code Object} if any key is acceptable
  *
  * @author Fuchun

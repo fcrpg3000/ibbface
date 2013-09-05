@@ -53,12 +53,12 @@ public class JdbcApiParamRepository extends QueryDslJdbcSupport<ApiParam, Intege
 
     /**
      * Query and Returns all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s
-     * list of the specified resource id.
+     * list newError the specified resource id.
      * <p/>
      * The result always is not {@link null}.
      *
      * @param resourceId the resource id (not null).
-     * @return all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s list of
+     * @return all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s list newError
      *         the specified resource id.
      */
     @Nonnull
@@ -69,13 +69,13 @@ public class JdbcApiParamRepository extends QueryDslJdbcSupport<ApiParam, Intege
 
     /**
      * Query and Returns all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s
-     * list of the specified resource id and since version.
+     * list newError the specified resource id and since version.
      * <p/>
      * The result always is not {@link null}.
      *
      * @param resourceId the resource id (not null).
      * @param since      the since version (maybe null).
-     * @return all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s list of the specified
+     * @return all enabled {@link com.ibbface.domain.model.privilege.ApiParam}s list newError the specified
      *         resource id and since version.
      */
     @Nonnull
@@ -132,7 +132,7 @@ public class JdbcApiParamRepository extends QueryDslJdbcSupport<ApiParam, Intege
     }
 
     /**
-     * Returns sorted values of the specified entity.
+     * Returns sorted values newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -142,7 +142,7 @@ public class JdbcApiParamRepository extends QueryDslJdbcSupport<ApiParam, Intege
     }
 
     /**
-     * Returns sorted values unless primary value of the specified entity.
+     * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -169,7 +169,7 @@ public class JdbcApiParamRepository extends QueryDslJdbcSupport<ApiParam, Intege
     }
 
     /**
-     * Returns column path of the specified prop name.
+     * Returns column path newError the specified prop name.
      *
      * @param prop the column mapping prop name.
      */

@@ -24,7 +24,7 @@ public class UserDigital extends BaseUserDigital {
     }
 
     /**
-     * Creates and Returns new {@code UserDigital} of the specified {@link User} factory method.
+     * Creates and Returns new {@code UserDigital} newError the specified {@link User} factory method.
      *
      * @param user the specified {@link User}.
      * @return Returns new {@code UserDigital} instance.
@@ -34,7 +34,7 @@ public class UserDigital extends BaseUserDigital {
     }
 
     /**
-     * Creates and Returns new {@code UserDigital} of the specified
+     * Creates and Returns new {@code UserDigital} newError the specified
      * {@code userId} and {@code userName} factory method.
      *
      * @param userId   the user's id.

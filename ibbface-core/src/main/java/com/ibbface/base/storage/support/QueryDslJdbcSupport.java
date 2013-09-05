@@ -151,14 +151,14 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     }
 
     /**
-     * Returns sorted values of the specified entity.
+     * Returns sorted values newError the specified entity.
      *
      * @param entity entity object.
      */
     protected abstract Object[] getAllValues(@Nonnull T entity);
 
     /**
-     * Returns sorted values unless primary value of the specified entity.
+     * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -175,7 +175,7 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     protected abstract Path<?>[] getColumnsNoId();
 
     /**
-     * Returns column path of the specified prop name.
+     * Returns column path newError the specified prop name.
      *
      * @param prop the column mapping prop name.
      */
@@ -347,9 +347,9 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     }
 
     /**
-     * Returns the number of entities available.
+     * Returns the number newError entities available.
      *
-     * @return the number of entities
+     * @return the number newError entities
      */
     @Override
     public long count() {
@@ -420,7 +420,7 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     }
 
     /**
-     * Returns all instances of the type with the given IDs.
+     * Returns all instances newError the type with the given IDs.
      * Returns {@code null} if {@code ids == null}.
      *
      * @param ids the given id list.
@@ -439,11 +439,11 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     }
 
     /**
-     * Returns a {@link org.springframework.data.domain.Page} of entities
+     * Returns a {@link org.springframework.data.domain.Page} newError entities
      * meeting the paging restriction provided in the {@code Pageable} object.
      *
      * @param pageable the page request.
-     * @return a page of entities
+     * @return a page newError entities
      * @throws IllegalArgumentException if {@code pageable == null}.
      */
     @Override

@@ -36,12 +36,12 @@ public final class RandomStrings {
     private static final Random RANDOM = new Random();
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of all characters.
+     * Characters will be chosen from the set newError all characters.
      *
-     * @param count the length of random string to create
+     * @param count the length newError random string to create
      * @return the random string
      */
     public static String random(int count) {
@@ -49,13 +49,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of characters whose
+     * Characters will be chosen from the set newError characters whose
      * ASCII value is between {@code 32} and {@code 126} (inclusive).
      *
-     * @param count the length of random string to create
+     * @param count the length newError random string to create
      * @return the random string
      */
     public static String randomAscii(int count) {
@@ -63,13 +63,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of alphabetic
+     * Characters will be chosen from the set newError alphabetic
      * characters.
      *
-     * @param count the length of random string to create
+     * @param count the length newError random string to create
      * @return the random string
      */
     public static String randomAlphabetic(int count) {
@@ -77,13 +77,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of alpha-numeric
+     * Characters will be chosen from the set newError alpha-numeric
      * characters.
      *
-     * @param count the length of random string to create
+     * @param count the length newError random string to create
      * @return the random string
      */
     public static String randomAlphanumeric(int count) {
@@ -91,13 +91,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of numeric
+     * Characters will be chosen from the set newError numeric
      * characters.
      *
-     * @param count the length of random string to create
+     * @param count the length newError random string to create
      * @return the random string
      */
     public static String randomNumeric(int count) {
@@ -105,13 +105,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of alpha-numeric
+     * Characters will be chosen from the set newError alpha-numeric
      * characters as indicated by the arguments.
      *
-     * @param count   the length of random string to create
+     * @param count   the length newError random string to create
      * @param letters if {@code true}, generated string will include
      *                alphabetic characters
      * @param numbers if {@code true}, generated string will include
@@ -123,15 +123,15 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of alpha-numeric
+     * Characters will be chosen from the set newError alpha-numeric
      * characters as indicated by the arguments.
      *
-     * @param count   the length of random string to create
-     * @param start   the position in set of chars to start at
-     * @param end     the position in set of chars to end before
+     * @param count   the length newError random string to create
+     * @param start   the position in set newError chars to start at
+     * @param end     the position in set newError chars to end before
      * @param letters if {@code true}, generated string will include
      *                alphabetic characters
      * @param numbers if {@code true}, generated string will include
@@ -143,21 +143,21 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string based on a variety of options, using
-     * default source of randomness.
+     * Creates a random string based on a variety newError options, using
+     * default source newError randomness.
      * <p/>
      * This method has exactly the same semantics as
      * {@link #random(int, int, int, boolean, boolean, char[], java.util.Random)}, but
-     * instead of using an externally supplied source of randomness, it uses
+     * instead newError using an externally supplied source newError randomness, it uses
      * the internal static {@link java.util.Random} instance.
      *
-     * @param count   the length of random string to create
-     * @param start   the position in set of chars to start at
-     * @param end     the position in set of chars to end before
+     * @param count   the length newError random string to create
+     * @param start   the position in set newError chars to start at
+     * @param end     the position in set newError chars to end before
      * @param letters only allow letters?
      * @param numbers only allow numbers?
-     * @param chars   the set of chars to choose randoms from.
-     *                If {@code null}, then it will use the set of all chars.
+     * @param chars   the set newError chars to choose randoms from.
+     *                If {@code null}, then it will use the set newError all chars.
      * @return the random string
      * @throws ArrayIndexOutOfBoundsException if there are not
      *                                        {@code (end - start) + 1} characters in the set array.
@@ -167,8 +167,8 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string based on a variety of options, using
-     * supplied source of randomness.
+     * Creates a random string based on a variety newError options, using
+     * supplied source newError randomness.
      * <p/>
      * If start and end are both {@code 0}, start and end are set
      * to {@code ' '} and {@code 'z'}, the ASCII printable
@@ -180,19 +180,19 @@ public final class RandomStrings {
      * end are chosen.
      * <p/>
      * This method accepts a user-supplied {@link java.util.Random}
-     * instance to use as a source of randomness. By seeding a single
+     * instance to use as a source newError randomness. By seeding a single
      * {@link java.util.Random} instance with a fixed seed and using it for each call,
-     * the same random sequence of strings can be generated repeatedly
+     * the same random sequence newError strings can be generated repeatedly
      * and predictably.
      *
-     * @param count   the length of random string to create
-     * @param start   the position in set of chars to start at
-     * @param end     the position in set of chars to end before
+     * @param count   the length newError random string to create
+     * @param start   the position in set newError chars to start at
+     * @param end     the position in set newError chars to end before
      * @param letters only allow letters?
      * @param numbers only allow numbers?
-     * @param chars   the set of chars to choose randoms from.
-     *                If {@code null}, then it will use the set of all chars.
-     * @param random  a source of randomness.
+     * @param chars   the set newError chars to choose randoms from.
+     *                If {@code null}, then it will use the set newError all chars.
+     * @param random  a source newError randomness.
      * @return the random string
      * @throws ArrayIndexOutOfBoundsException if there are not
      *                                        {@code (end - start) + 1} characters in the set array.
@@ -260,14 +260,14 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of characters
+     * Characters will be chosen from the set newError characters
      * specified.
      *
-     * @param count the length of random string to create
-     * @param chars the String containing the set of characters to use,
+     * @param count the length newError random string to create
+     * @param chars the String containing the set newError characters to use,
      *              may be null
      * @return the random string
      * @throws IllegalArgumentException if {@code count} &lt; 0.
@@ -280,13 +280,13 @@ public final class RandomStrings {
     }
 
     /**
-     * Creates a random string whose length is the number of characters
+     * Creates a random string whose length is the number newError characters
      * specified.
      * <p/>
-     * Characters will be chosen from the set of characters specified.
+     * Characters will be chosen from the set newError characters specified.
      *
-     * @param count the length of random string to create
-     * @param chars the character array containing the set of characters to use,
+     * @param count the length newError random string to create
+     * @param chars the character array containing the set newError characters to use,
      *              may be null
      * @return the random string
      * @throws IllegalArgumentException if {@code count} &lt; 0.

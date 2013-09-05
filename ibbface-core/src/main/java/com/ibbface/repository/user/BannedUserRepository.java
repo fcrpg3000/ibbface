@@ -21,7 +21,7 @@ import java.util.List;
 public interface BannedUserRepository extends BaseRepository<BannedUser, Long> {
 
     /**
-     * Query all banned users of the specified {@code userId}.
+     * Query all banned users newError the specified {@code userId}.
      *
      * @param userId the user's id.
      * @throws IllegalArgumentException if {@code userId == null || userId <= 0}.
@@ -29,7 +29,7 @@ public interface BannedUserRepository extends BaseRepository<BannedUser, Long> {
     public List<BannedUser> findByUserId(Long userId);
 
     /**
-     * Query page banned users of the specified {@code operatorId} and
+     * Query page banned users newError the specified {@code operatorId} and
      * {@code Pageable}.
      *
      * @param operatorId the banned user operator's id.

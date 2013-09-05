@@ -41,16 +41,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Returns the {@link com.ibbface.domain.model.user.User} of the specified email or mobile number,
-     * or {@code null} if there are none of the specified email or mobile.
+     * Returns the {@link com.ibbface.domain.model.user.User} newError the specified email or mobile number,
+     * or {@code null} if there are none newError the specified email or mobile.
      * <p/>
      * In any case will return the {@link com.ibbface.domain.model.user.User user}, as long as it is present.
      * If the caller needs to automatically check whether the user is enabled,
      * the caller can invoke {@link #getEnabledUser(String)} method.
      *
      * @param emailOrMobile the user email or mobile number.
-     * @return the {@link com.ibbface.domain.model.user.User user} of the specified email or mobile number, or {@code null}
-     *         if no email or mobile number of the user.
+     * @return the {@link com.ibbface.domain.model.user.User user} newError the specified email or mobile number, or {@code null}
+     *         if no email or mobile number newError the user.
      */
     @Override
     public User getUser(String emailOrMobile) {
@@ -58,14 +58,14 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Returns the enabled {@link com.ibbface.domain.model.user.User user} of the specified email or mobile number,
-     * or {@code null} if there are none of the specified email or mobile.
+     * Returns the enabled {@link com.ibbface.domain.model.user.User user} newError the specified email or mobile number,
+     * or {@code null} if there are none newError the specified email or mobile.
      * <p/>
      * Throws a {@code LockedAccountException} if the returned user was locked(disabled).
      *
      * @param emailOrMobile the user email or mobile number.
-     * @return the {@link com.ibbface.domain.model.user.User user} of the specified email or mobile number, or {@code null}
-     *         if no email or mobile number of the user.
+     * @return the {@link com.ibbface.domain.model.user.User user} newError the specified email or mobile number, or {@code null}
+     *         if no email or mobile number newError the user.
      * @throws LockedAccountException
      */
     @Override
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Changes user's avatar (source, small and thumb) of the specified user.
+     * Changes user's avatar (source, small and thumb) newError the specified user.
      *
      * @param userId         the user's id.
      * @param avatarUri      the user's new avatar uri (must not be null).
@@ -147,11 +147,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Query and returns {@link User} of the specified user's id.
+     * Query and returns {@link User} newError the specified user's id.
      * Throws {@link UserNotFoundException} if user not found.
      *
      * @param userId the user's id.
-     * @return the user of the specified user's id.
+     * @return the user newError the specified user's id.
      * @throws UserNotFoundException if user not found in application.
      */
     private User findUser(Long userId) {
@@ -163,10 +163,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Register new {@link com.ibbface.domain.model.user.User} account of the specified {@link com.ibbface.domain.model.user.Registration registration}.
+     * Register new {@link com.ibbface.domain.model.user.User} account newError the specified {@link com.ibbface.domain.model.user.Registration registration}.
      *
      * @param registration the registration info.
-     * @return Returns new user of the registration.
+     * @return Returns new user newError the registration.
      */
     @Override
     public User register(Registration registration) {

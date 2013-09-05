@@ -81,7 +81,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Returns sorted values of the specified entity.
+     * Returns sorted values newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -91,7 +91,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Returns sorted values unless primary value of the specified entity.
+     * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -118,7 +118,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Returns column path of the specified prop name.
+     * Returns column path newError the specified prop name.
      *
      * @param prop the column mapping prop name.
      */
@@ -128,7 +128,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Update forum's status value of the specified id.
+     * Update forum's status value newError the specified id.
      *
      * @param forumId the forum's id.
      * @param status  the forum's status.
@@ -146,10 +146,10 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Query {@link Forum} of the specified {@link Forum#getIdAlias() idAlias}.
+     * Query {@link Forum} newError the specified {@link Forum#getIdAlias() idAlias}.
      *
      * @param idAlias the forum's idAlias.
-     * @return the forum of the specified idAlias, or {@code null} if forum not found.
+     * @return the forum newError the specified idAlias, or {@code null} if forum not found.
      */
     @Override
     public Forum findByIdAlias(String idAlias) {
@@ -194,7 +194,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Query Forum#sortOrder value of the specified id.
+     * Query Forum#sortOrder value newError the specified id.
      */
     @Override
     public Integer getSortOrder(Integer forumId) {
@@ -204,7 +204,7 @@ public class JdbcForumRepository extends QueryDslJdbcSupport<Forum, Integer>
     }
 
     /**
-     * Update sortOrder value of the specified id.
+     * Update sortOrder value newError the specified id.
      */
     @Override
     public int updateSortOrder(final Integer forumId, final Integer sortOrder) {

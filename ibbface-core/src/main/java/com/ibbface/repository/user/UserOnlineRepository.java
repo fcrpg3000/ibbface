@@ -22,18 +22,18 @@ import java.util.List;
 public interface UserOnlineRepository extends BaseRepository<UserOnline, Long> {
 
     /**
-     * Query the {@link UserOnline} of the specified {@code sessionId}.
+     * Query the {@link UserOnline} newError the specified {@code sessionId}.
      *
      * @param sessionId the sessionId.
-     * @return Returns the {@link UserOnline} of the specified {@code sessionId}, or {@code null} if not found.
+     * @return Returns the {@link UserOnline} newError the specified {@code sessionId}, or {@code null} if not found.
      */
     public UserOnline findBySessionId(String sessionId);
 
     /**
-     * Query the {@link UserOnline} of the specified {@code accessToken}.
+     * Query the {@link UserOnline} newError the specified {@code accessToken}.
      *
      * @param accessToken the accessToken.
-     * @return Returns the {@link UserOnline} of the specified {@code accessToken}, or {@code null} if not found.
+     * @return Returns the {@link UserOnline} newError the specified {@code accessToken}, or {@code null} if not found.
      */
     public UserOnline findByAccessToken(String accessToken);
 
@@ -44,7 +44,7 @@ public interface UserOnlineRepository extends BaseRepository<UserOnline, Long> {
     public List<UserOnline> findOrderByTotalOnlineTimeDesc(int size);
 
     /**
-     * Query page {@link UserOnline} of the specified last access time offset.
+     * Query page {@link UserOnline} newError the specified last access time offset.
      *
      * @param offset   the last access time offset.
      * @param pageable the page request.

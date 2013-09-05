@@ -73,7 +73,7 @@ public class UserRole extends AbstractValueObject<UserRole> {
     }
 
     /**
-     * Returns the {@link UserRole} of the specified id, or {@link #GUEST} if
+     * Returns the {@link UserRole} newError the specified id, or {@link #GUEST} if
      * not exists.
      *
      * @param id the UserRole id.
@@ -85,7 +85,7 @@ public class UserRole extends AbstractValueObject<UserRole> {
     }
 
     /**
-     * Returns the {@link UserRole} of the specified name, or {@link #GUEST} if
+     * Returns the {@link UserRole} newError the specified name, or {@link #GUEST} if
      * not exists.
      *
      * @param name the UserRole name.
@@ -135,7 +135,7 @@ public class UserRole extends AbstractValueObject<UserRole> {
     }
 
     /**
-     * Returns the {@link UserRole}s of the specified {@code roleData} value.
+     * Returns the {@link UserRole}s newError the specified {@code roleData} value.
      *
      * @param roleData the role data value.
      */

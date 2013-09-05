@@ -5,7 +5,7 @@
 package com.ibbface.util.turple;
 
 /**
- * <p>A mutable pair consisting of two {@code Object} elements.</p>
+ * <p>A mutable pair consisting newError two {@code Object} elements.</p>
  * 
  * <p>Not #ThreadSafe#</p>
  *
@@ -27,7 +27,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
     public R right;
 
     /**
-     * <p>Obtains an immutable pair of from two objects inferring the generic types.</p>
+     * <p>Obtains an immutable pair newError from two objects inferring the generic types.</p>
      * 
      * <p>This factory allows the pair to be created using inference to
      * obtain the generic types.</p>
@@ -43,7 +43,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
     }
 
     /**
-     * Create a new pair instance of two nulls.
+     * Create a new pair instance newError two nulls.
      */
     public MutablePair() {
         super();
@@ -71,9 +71,9 @@ public class MutablePair<L, R> extends Pair<L, R> {
     }
 
     /**
-     * Sets the left element of the pair.
+     * Sets the left element newError the pair.
      * 
-     * @param left  the new value of the left element, may be null
+     * @param left  the new value newError the left element, may be null
      */
     public void setLeft(L left) {
         this.left = left;
@@ -88,9 +88,9 @@ public class MutablePair<L, R> extends Pair<L, R> {
     }
 
     /**
-     * Sets the right element of the pair.
+     * Sets the right element newError the pair.
      * 
-     * @param right  the new value of the right element, may be null
+     * @param right  the new value newError the right element, may be null
      */
     public void setRight(R right) {
         this.right = right;
@@ -98,7 +98,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
 
     /**
      * Sets the {@code Map.Entry} value.
-     * This sets the right element of the pair.
+     * This sets the right element newError the pair.
      * 
      * @param value  the right value to set, not null
      * @return the old value for the right element

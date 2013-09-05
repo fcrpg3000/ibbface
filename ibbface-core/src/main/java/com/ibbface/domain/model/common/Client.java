@@ -50,9 +50,14 @@ public enum Client implements ValueObject<Client> {
     IPAD(6, "iPad客户端", true),
 
     /**
+     * iPod 客户端。
+     */
+    IPOD(7, "iPod客户端", true),
+
+    /**
      * FirefoxOS 客户端。
      */
-    FIREFOX_OS(7, "FirefoxOS客户端", true);
+    FIREFOX_OS(8, "FirefoxOS客户端", true);
 
     final short code;
     final String name;
@@ -126,6 +131,18 @@ public enum Client implements ValueObject<Client> {
         }
         for (Client c : values()) {
             if (c.code == code.shortValue()) {
+                return c;
+            }
+        }
+        return UNKNOWN;
+    }
+
+    public static Client of(String name) {
+        if (name == null) {
+            return UNKNOWN;
+        }
+        for (Client c : values()) {
+            if (c.name().equalsIgnoreCase(name)) {
                 return c;
             }
         }

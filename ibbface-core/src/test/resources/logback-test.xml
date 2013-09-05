@@ -15,6 +15,7 @@
     </appender>
 
     <logger name="com.ibbface.service" level="debug" />
+    <logger name="com.ibbface.web" level="debug" />
     <logger name="com.ibbface.base.storage" level="debug" />
     <logger name="com.ibbface.base.cache" level="info" />
     <logger name="org.springframework" level="info" />

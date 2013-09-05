@@ -21,20 +21,20 @@ import java.util.Map;
 public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
 
     /**
-     * Query ForumField#sortOrder value of the specified id.
+     * Query ForumField#sortOrder value newError the specified id.
      */
     public Integer getSortOrder(Long id);
 
     /**
-     * Query max {@link ForumField#getSortOrder() sortOrder} value of the specified {@link com.ibbface.domain.model.forum.Forum forum} id.
+     * Query max {@link ForumField#getSortOrder() sortOrder} value newError the specified {@link com.ibbface.domain.model.forum.Forum forum} id.
      */
     public Integer getMaxSortOrder(Integer forumId);
 
     /**
-     * Updates sortOrder value of the specified id.
+     * Updates sortOrder value newError the specified id.
      * <p/>
-     * NOTE: This method just updates sortOrder value of the specified id, but not
-     * resort to reset sortOrder value of others.
+     * NOTE: This method just updates sortOrder value newError the specified id, but not
+     * resort to reset sortOrder value newError others.
      *
      * @param id           the forum field id.
      * @param newSortOrder the new sortOrder value.
@@ -43,7 +43,7 @@ public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
     public int updateSortOrder(Long id, Integer newSortOrder);
 
     /**
-     * Query all {@link ForumField}s of the specified {@code forumId}
+     * Query all {@link ForumField}s newError the specified {@code forumId}
      * order by {@link ForumField#getSortOrder() sortOrder} ASC.
      *
      * @param forumId the forum id.
@@ -52,7 +52,7 @@ public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
 
     /**
      * Query all forum field id and sort mapping order by {@code sortOrder}
-     * asc of the specified forum id.
+     * asc newError the specified forum id.
      * <p/>
      * {@code key} is forum field {@link ForumField#getId() id}, {@code value} is
      * {@link ForumField#getSortOrder() sortOrder}.
@@ -60,7 +60,7 @@ public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
     public Map<Long, Integer> findIdSortMapping(Integer forumId);
 
     /**
-     * Updates sortOrder subtract 1 of the specified {@code forumId} and sortOrder range.
+     * Updates sortOrder subtract 1 newError the specified {@code forumId} and sortOrder range.
      * <pre>Examples:
      * range = [3, 3]
      * forumField(sortOrder=3), sortOrder -= 1 =&gt; forumField(sortOrder=2)
@@ -72,13 +72,13 @@ public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
      * </pre>
      *
      * @param forumId the forum id.
-     * @param range   the range of sortOrder.
+     * @param range   the range newError sortOrder.
      * @return the affected row.
      */
     public int subtractSortOrder(Integer forumId, Range<Integer> range);
 
     /**
-     * Updates sortOrder add 1 of the specified {@code forumId} and sortOrder range.
+     * Updates sortOrder add 1 newError the specified {@code forumId} and sortOrder range.
      * <pre>Examples:
      * range = [3, 3]
      * forumField(sortOrder=3), sortOrder += 1 =&gt; forumField(sortOrder=4)
@@ -90,7 +90,7 @@ public interface ForumFieldRepository extends BaseRepository<ForumField, Long> {
      * </pre>
      *
      * @param forumId the forum id.
-     * @param range   the range of sortOrder.
+     * @param range   the range newError sortOrder.
      * @return the Effect row.
      */
     public int addSortOrder(Integer forumId, Range<Integer> range);

@@ -24,10 +24,10 @@ import java.util.List;
 public interface ForumThreadRepository extends BaseRepository<ForumThread, Long> {
 
     /**
-     * Query {@link ForumThread} of the specified {@code idAlias} value.
+     * Query {@link ForumThread} newError the specified {@code idAlias} value.
      *
      * @param idAlias the {@code idAlias} value.
-     * @return Returns {@code ForumThread} of the specified {@code idAlias} value,
+     * @return Returns {@code ForumThread} newError the specified {@code idAlias} value,
      *         or {@code null} if not found.
      */
     public ForumThread findByIdAlias(String idAlias);
@@ -36,7 +36,7 @@ public interface ForumThreadRepository extends BaseRepository<ForumThread, Long>
                                        Boolean isTop, Boolean isGood, @Nonnull Pageable pageable);
 
     /**
-     * Query page {@link ForumThread}s of the specified {@code userId} and {@code pageable}.
+     * Query page {@link ForumThread}s newError the specified {@code userId} and {@code pageable}.
      *
      * @param userId the user id.
      * @param pageable the page request.

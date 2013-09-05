@@ -20,25 +20,25 @@ import java.util.List;
 public interface UserSocialRepository extends BaseRepository<UserSocial, Long> {
 
     /**
-     * Query {@link UserSocial} of the specified {@code openUid} and {@code openProvider}.
+     * Query {@link UserSocial} newError the specified {@code openUid} and {@code openProvider}.
      * <p/>
      * Return {@code null} immediately if {@code openUid == null || openUid.length() == 0} or
      * {@code openProvider == null}.
      *
      * @param openUid      the UserSocial openUid.
      * @param openProvider the UserSocial openProvider.
-     * @return Returns {@link UserSocial} of the specified {@code openUid} and {@code openProvider},
+     * @return Returns {@link UserSocial} newError the specified {@code openUid} and {@code openProvider},
      *         or {@code null} if not found.
      */
     UserSocial findByOpen(String openUid, OpenProvider openProvider);
 
     /**
-     * Query {@link UserSocial} of the specified {@code userId}.
+     * Query {@link UserSocial} newError the specified {@code userId}.
      * <p/>
      * Return {@code null} immediately if {@code userId == null || userId <= 0}.
      *
      * @param userId the user id.
-     * @return Returns {@link UserSocial} of the specified {@code userId}, or {@code null} if not found.
+     * @return Returns {@link UserSocial} newError the specified {@code userId}, or {@code null} if not found.
      */
     List<UserSocial> findByUserId(Long userId);
 }

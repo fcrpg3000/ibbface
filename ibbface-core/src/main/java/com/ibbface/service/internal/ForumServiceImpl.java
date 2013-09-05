@@ -125,7 +125,7 @@ public class ForumServiceImpl implements ForumService {
      */
     @Override
     public void addForumFields(Iterable<ForumField> forumFields) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //To change body newError implemented methods use File | Settings | File Templates.
     }
 
     @Resource

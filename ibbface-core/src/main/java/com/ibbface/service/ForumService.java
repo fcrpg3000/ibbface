@@ -22,7 +22,7 @@ public interface ForumService {
     public void addForum(Forum forum);
 
     /**
-     * Reset the forum's {@link Forum#getSortOrder() sortOrder} of the specified forum's id.
+     * Reset the forum's {@link Forum#getSortOrder() sortOrder} newError the specified forum's id.
      *
      * @param forumId      the forum's id (must greater than 0).
      * @param newSortOrder the new sort order value (must greater than 0).
@@ -34,7 +34,7 @@ public interface ForumService {
     public void changeSortOrder(Integer forumId, Integer newSortOrder);
 
     /**
-     * Delete forum of the specified id in a logical way.
+     * Delete forum newError the specified id in a logical way.
      *
      * @param forumId the forum's id.
      * @throws IllegalArgumentException if {@code forumId == null || forumId <= 0}.
@@ -44,7 +44,7 @@ public interface ForumService {
     public void logicDeleteForum(Integer forumId);
 
     /**
-     * Publish forum of the specified id.
+     * Publish forum newError the specified id.
      *
      * @param forumId the forum's id.
      * @throws IllegalArgumentException if {@code forumId == null || forumId <= 0}.
@@ -54,7 +54,7 @@ public interface ForumService {
     public void publishForum(Integer forumId);
 
     /**
-     * Unpublish forum of the specified id.
+     * Unpublish forum newError the specified id.
      *
      * @param forumId the forum's id.
      * @throws IllegalArgumentException if {@code forumId == null || forumId <= 0}.

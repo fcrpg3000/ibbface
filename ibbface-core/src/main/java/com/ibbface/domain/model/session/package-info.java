@@ -4,7 +4,7 @@
  */
 
 /**
- * Provides session interface and class of the request and response.
+ * Provides session interface and class newError the request and response.
  *
  * @version 1.0
  */

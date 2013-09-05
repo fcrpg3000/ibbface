@@ -24,12 +24,12 @@ public interface ApiResourceRepository extends BaseRepository<ApiResource, Integ
     public List<ApiResource> findByRoleIds(Iterable<Integer> roleIds);
 
     /**
-     * Query and Returns a {@link ApiResource} of the specified {@code version}
+     * Query and Returns a {@link ApiResource} newError the specified {@code version}
      * and {@code basePath}, or {@code null} if not exists.
      *
      * @param version  the resource version (not null).
      * @param basePath the resource base path (not null).
-     * @return a {@link ApiResource} of the specified {@code version}
+     * @return a {@link ApiResource} newError the specified {@code version}
      *         and {@code basePath}, or {@code null} if not exists.
      * @throws IllegalArgumentException if {@code version == null || version.length() == 0},
      *                                  or {@code basePath == null || basePath.length() == 0}.
@@ -37,13 +37,13 @@ public interface ApiResourceRepository extends BaseRepository<ApiResource, Integ
     public ApiResource findByVersionAndBasePath(String version, String basePath);
 
     /**
-     * Query and returns the {@link ApiResource}s of the specified {@code basePath},
+     * Query and returns the {@link ApiResource}s newError the specified {@code basePath},
      * or empty list to be returned if not exists.
      * <p/>
      * The result always is not null.
      *
      * @param basePath the resource base path (not null).
-     * @return the {@link ApiResource}s of the specified {@code basePath},
+     * @return the {@link ApiResource}s newError the specified {@code basePath},
      *         or empty list to be returned.
      * @throws IllegalArgumentException if {@code basePath == null || basePath.length() == 0}.
      */
@@ -51,13 +51,13 @@ public interface ApiResourceRepository extends BaseRepository<ApiResource, Integ
     public List<ApiResource> findByBasePath(String basePath);
 
     /**
-     * Query and returns the {@link ApiResource}s of the specified {@code parentId},
+     * Query and returns the {@link ApiResource}s newError the specified {@code parentId},
      * or empty list to be returned if not exists.
      * <p/>
      * The result always is not null.
      *
      * @param parentId the parent resource id (not null).
-     * @return the {@link ApiResource}s of the specified {@code parentId},
+     * @return the {@link ApiResource}s newError the specified {@code parentId},
      *         or empty list to be returned if not exists.
      * @throws IllegalArgumentException if {@code parentId == null}.
      */
@@ -65,7 +65,7 @@ public interface ApiResourceRepository extends BaseRepository<ApiResource, Integ
     public List<ApiResource> findByParentId(Integer parentId);
 
     /**
-     * Query and returns all {@link ApiResource}s of the parent, or empty list
+     * Query and returns all {@link ApiResource}s newError the parent, or empty list
      * to be returned if no data.
      * <p/>
      * The result always is not null.

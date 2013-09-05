@@ -1,0 +1,46 @@
+{"id":107,"name":"android","fullName":"android 2.1","version":"2.1"}
+{"id":108,"name":"android","fullName":"android 2.2","version":"2.2"}
+{"id":110,"name":"android","fullName":"android 2.3","version":"2.3.x"}
+{"id":111,"name":"android","fullName":"android 3.0","version":"3.0"}
+{"id":112,"name":"android","fullName":"android 3.1","version":"3.1"}
+{"id":113,"name":"android","fullName":"android 3.2","version":"3.2"}
+{"id":114,"name":"android","fullName":"android 4.0","version":"4.0"}
+{"id":115,"name":"android","fullName":"android 4.0.x","version":"4.0.x"}
+{"id":116,"name":"android","fullName":"android 4.1.x","version":"4.1.x"}
+{"id":117,"name":"android","fullName":"android 4.2.x","version":"4.2.x"}
+{"id":212,"name":"iphone","fullName":"iphone3G","version":"1.2"}
+{"id":221,"name":"iphone","fullName":"iphone3GS","version":"2.1"}
+{"id":231,"name":"iphone","fullName":"iphone4(移动,联通)","version":"3.1"}
+{"id":232,"name":"iphone","fullName":"iphone4(联通)","version":"3.2"}
+{"id":233,"name":"iphone","fullName":"iphone4(电信)","version":"3.3"}
+{"id":241,"name":"iphone","fullName":"iphone4S","version":"4.1"}
+{"id":251,"name":"iphone","fullName":"iphone5(移动,联通)","version":"5.1"}
+{"id":252,"name":"iphone","fullName":"iphone5(移动,电信,联通)","version":"5.2"}
+{"id":311,"name":"ipad","fullName":"ipad 1","version":"1.1"}
+{"id":321,"name":"ipad","fullName":"ipad 2(WIFI)","version":"2.1"}
+{"id":322,"name":"ipad","fullName":"ipad 2(GSM)","version":"2.2"}
+{"id":323,"name":"ipad","fullName":"ipad 2(CDMA)","version":"2.3"}
+{"id":324,"name":"ipad","fullName":"ipad 2(32nm)","version":"2.4"}
+{"id":325,"name":"ipad","fullName":"ipad mini(WIFI)","version":"2.5"}
+{"id":326,"name":"ipad","fullName":"ipad mini(GSM)","version":"2.6"}
+{"id":327,"name":"ipad","fullName":"ipad mini(CDMA)","version":"2.7"}
+{"id":331,"name":"ipad","fullName":"ipad 3(WIFI)","version":"3.1"}
+{"id":332,"name":"ipad","fullName":"ipad 3(CDMA)","version":"3.2"}
+{"id":333,"name":"ipad","fullName":"ipad 3(4G)","version":"3.3"}
+{"id":334,"name":"ipad","fullName":"ipad 4(WIFI)","version":"3.4"}
+{"id":335,"name":"ipad","fullName":"ipad 4(4G)","version":"3.5"}
+{"id":336,"name":"ipad","fullName":"ipad 4(CDMA)","version":"3.6"}
+{"id":411,"name":"ipod","fullName":"ipod touch","version":"1.1"}
+{"id":421,"name":"ipod","fullName":"ipod touch 2","version":"2.1"}
+{"id":431,"name":"ipod","fullName":"ipod touch 3","version":"3.1"}
+{"id":441,"name":"ipod","fullName":"ipod touch 4","version":"4.1"}
+{"id":451,"name":"ipod","fullName":"ipod touch 5","version":"5.1"}
+{"id":551,"name":"windows","fullName":"Windows XP","version":"5.1"}
+{"id":552,"name":"windows","fullName":"Windows Vista","version":"5.2"}
+{"id":561,"name":"windows","fullName":"Windows 7","version":"6.1"}
+{"id":562,"name":"windows","fullName":"Windows 8","version":"6.2"}
+{"id":575,"name":"windows phone","fullName":"Windows Phone OS 7.5","version":"7.5"}
+{"id":580,"name":"windows phone","fullName":"Windows Phone 8.0","version":"8.0"}
+{"id":6106,"name":"mac os x","fullName":"Mac OS X 10.6","version":"10.6"}
+{"id":6107,"name":"mac os x","fullName":"Mac OS X 10.7","version":"10.7"}
+{"id":6108,"name":"mac os x","fullName":"Mac OS X 10.8","version":"10.8"}

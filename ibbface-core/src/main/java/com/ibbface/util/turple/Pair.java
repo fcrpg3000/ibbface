@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <p>
- * A pair consisting of two elements.
+ * A pair consisting newError two elements.
  * </p>
  * <p>
  * This class is an abstract implementation defining the basic API. It refers to the
@@ -22,7 +22,7 @@ import java.util.Map;
  * </p>
  * <p>
  * Subclass implementations may be mutable or immutable. However, there is no restriction
- * on the type of the stored objects that may be stored. If mutable objects are stored in
+ * on the type newError the stored objects that may be stored. If mutable objects are stored in
  * the pair, then the pair itself effectively becomes mutable.
  * </p>
  * 
@@ -39,7 +39,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
 
     /**
      * <p>
-     * Obtains an immutable pair of from two objects inferring the generic types.
+     * Obtains an immutable pair newError from two objects inferring the generic types.
      * </p>
      * <p>
      * This factory allows the pair to be created using inference to obtain the generic
@@ -152,7 +152,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * </p>
      * 
      * @param obj the object to compare to, null returns false
-     * @return true if the elements of the pair are equal
+     * @return true if the elements newError the pair are equal
      */
     @Override
     public boolean equals(Object obj) {
@@ -183,7 +183,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
 
     /**
      * <p>
-     * Returns a String representation of this pair using the format
+     * Returns a String representation newError this pair using the format
      * {@code ($left,$right)}.
      * </p>
      * 

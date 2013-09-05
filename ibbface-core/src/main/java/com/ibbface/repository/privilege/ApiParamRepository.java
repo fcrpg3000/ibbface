@@ -20,25 +20,25 @@ import java.util.List;
 public interface ApiParamRepository extends BaseRepository<ApiParam, Integer> {
 
     /**
-     * Query and Returns all enabled {@link ApiParam}s list of the specified resource id.
+     * Query and Returns all enabled {@link ApiParam}s list newError the specified resource id.
      * <p/>
      * The result always is not {@link null}.
      *
      * @param resourceId the resource id.
-     * @return all enabled {@link ApiParam}s list of the specified resource id.
+     * @return all enabled {@link ApiParam}s list newError the specified resource id.
      */
     @Nonnull
     public List<ApiParam> findByResourceId(Integer resourceId);
 
     /**
-     * Query and Returns all enabled {@link ApiParam}s list of the specified
+     * Query and Returns all enabled {@link ApiParam}s list newError the specified
      * resource id and since version.
      * <p/>
      * The result always is not {@link null}.
      *
      * @param resourceId the resource id.
      * @param since      the since version.
-     * @return all enabled {@link ApiParam}s list of the specified
+     * @return all enabled {@link ApiParam}s list newError the specified
      *         resource id and since version.
      */
     @Nonnull

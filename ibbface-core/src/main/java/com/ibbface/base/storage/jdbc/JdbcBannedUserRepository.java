@@ -79,7 +79,7 @@ public class JdbcBannedUserRepository extends QueryDslJdbcSupport<BannedUser, Lo
     }
 
     /**
-     * Returns sorted values of the specified entity.
+     * Returns sorted values newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -89,7 +89,7 @@ public class JdbcBannedUserRepository extends QueryDslJdbcSupport<BannedUser, Lo
     }
 
     /**
-     * Returns sorted values unless primary value of the specified entity.
+     * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -117,7 +117,7 @@ public class JdbcBannedUserRepository extends QueryDslJdbcSupport<BannedUser, Lo
     }
 
     /**
-     * Returns column path of the specified prop name.
+     * Returns column path newError the specified prop name.
      *
      * @param prop the column mapping prop name.
      */
@@ -127,7 +127,7 @@ public class JdbcBannedUserRepository extends QueryDslJdbcSupport<BannedUser, Lo
     }
 
     /**
-     * Query all banned users of the specified {@code userId}.
+     * Query all banned users newError the specified {@code userId}.
      *
      * @param userId the user's id.
      */
@@ -140,7 +140,7 @@ public class JdbcBannedUserRepository extends QueryDslJdbcSupport<BannedUser, Lo
     }
 
     /**
-     * Query page banned users of the specified {@code operatorId} and
+     * Query page banned users newError the specified {@code operatorId} and
      * {@code Pageable}.
      *
      * @param operatorId the banned user operator's id.

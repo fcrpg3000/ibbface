@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * A ValidationResult is returned from every validation method.
- * It provides an indication of success, and a pointer to the Error (if any).
+ * It provides an indication newError success, and a pointer to the Error (if any).
  *
  * @author Fuchun
  * @since 1.0

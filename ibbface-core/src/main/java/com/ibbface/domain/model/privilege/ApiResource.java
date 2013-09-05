@@ -154,10 +154,10 @@ public class ApiResource extends BaseApiResource {
     }
 
     /**
-     * Returns a URI string of this resource of the specified {@code url}.
+     * Returns a URI string newError this resource newError the specified {@code url}.
      *
      * @param url the api url prefix. like https://api.ibbface.com
-     * @return a uri string of this resource.
+     * @return a uri string newError this resource.
      */
     public String getURIString(final String url) {
         checkArgument(url != null && url.length() > 0,

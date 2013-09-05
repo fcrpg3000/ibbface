@@ -161,7 +161,7 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
     }
 
     /**
-     * Returns sorted values of the specified entity.
+     * Returns sorted values newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -171,7 +171,7 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
     }
 
     /**
-     * Returns sorted values unless primary value of the specified entity.
+     * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
@@ -198,7 +198,7 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
     }
 
     /**
-     * Returns column path of the specified prop name.
+     * Returns column path newError the specified prop name.
      *
      * @param prop the column mapping prop name.
      */

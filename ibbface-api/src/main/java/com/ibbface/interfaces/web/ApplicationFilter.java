@@ -68,7 +68,7 @@ public class ApplicationFilter implements Filter {
         request.setCharacterEncoding(Charsets.UTF_8.displayName());
         response.setCharacterEncoding(Charsets.UTF_8.displayName());
 
-        // Prevent rendering of JSESSIONID in URLs for all outgoing links
+        // Prevent rendering newError JSESSIONID in URLs for all outgoing links
         HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(response) {
             @Override
             public String encodeRedirectUrl(String url) {

@@ -5,7 +5,7 @@
 package com.ibbface.context;
 
 import com.google.common.collect.Maps;
-import com.ibbface.util.UserAgent;
+import com.ibbface.domain.model.common.ClientInfo;
 import com.ibbface.web.ServletUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public final class AppContext implements Serializable {
 
     private static final String KEY_OF_CLIENT_IP = "AppContext.clientIp";
 
-    private static final String KEY_OF_USER_AGENT = "AppContext.userAgent";
+    private static final String KEY_OF_CLIENT_INFO = "AppContext.clientInfo";
 
     private static final String KEY_OF_ACCESS_TOKEN = "AppContext.accessToken";
 
@@ -58,12 +58,12 @@ public final class AppContext implements Serializable {
     public static AppContext initAppContext(HttpServletRequest request) {
         initAppContext();
         String clientIp = ServletUtils.getClientIp(request);
-        UserAgent userAgent = UserAgent.parse(request.getHeader("User-Agent"));
+        ClientInfo clientInfo = ClientInfo.fromUserAgent(request.getHeader("User-Agent"));
         String authorizationHeader = request.getHeader("Authorization");
         String accessToken = authorizationHeader == null ? null :
                 (authorizationHeader.contains(" ") ? authorizationHeader.split(" ")[1] : null);
         setClientIp(clientIp);
-        setUserAgent(userAgent);
+        setClientInfo(clientInfo);
         setAccessToken(accessToken);
         return getContext();
     }
@@ -126,25 +126,25 @@ public final class AppContext implements Serializable {
     /**
      * 返回应用当前上下文中的 {@code UserAgent}。
      */
-    public static UserAgent getUserAgent() {
+    public static ClientInfo getClientInfo() {
         AppContext ctx = getContext();
         if (ctx == null) {
             return null;
         }
-        return (UserAgent) ctx.attributes.get(KEY_OF_USER_AGENT);
+        return (ClientInfo) ctx.attributes.get(KEY_OF_CLIENT_INFO);
     }
 
     /**
-     * 设置应用当前上下文中的 {@code UserAgent}。
+     * 设置应用当前上下文中的 {@code ClientInfo}。
      *
-     * @param ua 应用当前上下文中的 {@code UserAgent}。
+     * @param ua 应用当前上下文中的 {@code ClientInfo}。
      */
-    public static void setUserAgent(UserAgent ua) {
+    public static void setClientInfo(ClientInfo ua) {
         AppContext ctx = getContext();
         if (ctx == null) {
             return;
         }
-        ctx.attributes.put(KEY_OF_USER_AGENT, ua);
+        ctx.attributes.put(KEY_OF_CLIENT_INFO, ua);
     }
 
     public static String getAccessToken() {
@@ -157,7 +157,7 @@ public final class AppContext implements Serializable {
 
     public static void setAccessToken(String accessToken) {
         AppContext ctx = getContext();
-        if (ctx == null || accessToken == null) {
+        if (ctx == null) {
             return;
         }
         ctx.attributes.put(KEY_OF_ACCESS_TOKEN, accessToken);
@@ -191,11 +191,5 @@ public final class AppContext implements Serializable {
             return attributes.remove(key);
         }
         return attributes.put(key, val);
-    }
-
-    public static void main(String[] args) {
-        String text = "Bearer ";
-        String token = text.split(" ")[1];
-        System.out.println(token);
     }
 }

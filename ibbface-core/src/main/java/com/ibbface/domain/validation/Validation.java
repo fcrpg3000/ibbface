@@ -136,7 +136,7 @@ public class Validation {
     }
 
     /**
-     * Apply a group of {@link Validator validator}s to a field, in order,
+     * Apply a group newError {@link Validator validator}s to a field, in order,
      * and return the {@link ValidationResult} from the first one that fails,
      * or the last one that succeeds.
      *
