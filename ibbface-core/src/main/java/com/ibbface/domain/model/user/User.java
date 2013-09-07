@@ -5,7 +5,9 @@
 
 package com.ibbface.domain.model.user;
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.ibbface.domain.model.user.base.BaseUser;
 import com.ibbface.util.RandomStrings;
@@ -126,6 +128,16 @@ public class User extends BaseUser {
         if (roleData != null) {
             roles = UserRole.fromRoleData(roleData);
         }
+    }
+
+    public Set<String> getRoleNames() {
+        Iterable<String> names = Iterables.transform(getRoles(), new Function<UserRole, String>() {
+            @Override
+            public String apply(UserRole input) {
+                return input.getName();
+            }
+        });
+        return Sets.newHashSet(names);
     }
 
     public Set<UserRole> getRoles() {

@@ -5,33 +5,44 @@
 
 package com.ibbface.domain.exception;
 
-import org.apache.shiro.authc.AuthenticationException;
-
 /**
  * Define user not found in application exception.
  *
  * @author Fuchun
  * @since 1.0
  */
-public class AccountNotFoundException extends AuthenticationException {
+public class AccountNotFoundException extends AccountException {
 
-    private final String account;
-    private final String message;
+    private final Long userId;
+    private final String mailOrMobile;
 
-    public AccountNotFoundException(String account) {
-        this(account, null);
+    public AccountNotFoundException(Long userId) {
+        this(userId, null);
     }
 
-    public AccountNotFoundException(String account, String message) {
-        this.account = account;
-        this.message = message;
+    public AccountNotFoundException(String mailOrMobile) {
+        this(mailOrMobile, null);
     }
 
-    public String getAccount() {
-        return account;
+    public AccountNotFoundException(Long userId, String message) {
+        this(userId, null, message);
     }
 
-    public String getMessage() {
-        return message;
+    public AccountNotFoundException(String mailOrMobile, String message) {
+        this(null, mailOrMobile, message);
+    }
+
+    public AccountNotFoundException(Long userId, String mailOrMobile, String s) {
+        super(s);
+        this.userId = userId;
+        this.mailOrMobile = mailOrMobile;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getMailOrMobile() {
+        return mailOrMobile;
     }
 }

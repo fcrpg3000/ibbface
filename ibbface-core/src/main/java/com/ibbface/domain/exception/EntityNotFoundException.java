@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author Fuchun
  * @since 1.0
  */
-public class EntityNotFoundException extends RuntimeException {
+public class EntityNotFoundException extends IBBFaceException {
 
     private final Serializable entityId;
     private final Class<?> entityClass;

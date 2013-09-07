@@ -10,8 +10,10 @@ package com.ibbface.domain.exception;
  *
  * @author Fuchun
  * @since 1.0
+ * @deprecated used to {@link AccountNotFoundException}.
  */
-public class UserNotFoundException extends RuntimeException {
+@Deprecated
+public class UserNotFoundException extends IBBFaceException {
 
     private final Long userId;
     private final String message;

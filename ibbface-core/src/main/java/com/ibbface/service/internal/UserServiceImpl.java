@@ -5,16 +5,16 @@
 
 package com.ibbface.service.internal;
 
-import com.ibbface.service.UserService;
+import com.ibbface.domain.exception.AccountNotFoundException;
 import com.ibbface.domain.exception.UnauthorizedException;
-import com.ibbface.domain.exception.UserNotFoundException;
 import com.ibbface.domain.model.user.BannedUser;
-import com.ibbface.repository.user.BannedUserRepository;
 import com.ibbface.domain.model.user.Operator;
 import com.ibbface.domain.model.user.Registration;
 import com.ibbface.domain.model.user.User;
-import com.ibbface.repository.user.UserRepository;
 import com.ibbface.domain.validation.Validator;
+import com.ibbface.repository.user.BannedUserRepository;
+import com.ibbface.repository.user.UserRepository;
+import com.ibbface.service.UserService;
 import org.apache.shiro.authc.LockedAccountException;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
      * @param emailOrMobile the user email or mobile number.
      * @return the {@link com.ibbface.domain.model.user.User user} newError the specified email or mobile number, or {@code null}
      *         if no email or mobile number newError the user.
-     * @throws LockedAccountException
+     * @throws LockedAccountException if the user of the specified {@code emailOrMobile} has been locked.
      */
     @Override
     public User getEnabledUser(String emailOrMobile) {
@@ -148,16 +148,16 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Query and returns {@link User} newError the specified user's id.
-     * Throws {@link UserNotFoundException} if user not found.
+     * Throws {@link AccountNotFoundException} if user not found.
      *
      * @param userId the user's id.
      * @return the user newError the specified user's id.
-     * @throws UserNotFoundException if user not found in application.
+     * @throws AccountNotFoundException if user not found in application.
      */
     private User findUser(Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null) {
-            throw new UserNotFoundException(userId, "users.m.notFound");
+            throw new AccountNotFoundException(userId, "users.m.notFound");
         }
         return user;
     }

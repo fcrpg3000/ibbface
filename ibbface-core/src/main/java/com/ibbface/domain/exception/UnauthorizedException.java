@@ -6,21 +6,26 @@
 package com.ibbface.domain.exception;
 
 /**
- * user unauthorized fail the exception.
+ * Thrown to indicate a requested operation or access to a requested resource is not allowed.
  *
  * @author Fuchun
  * @since 1.0
  */
-public class UnauthorizedException extends RuntimeException {
+public class UnauthorizedException extends AuthenticationException {
 
-    private final String message;
-
-    public UnauthorizedException(String s) {
-        this.message = s;
+    public UnauthorizedException() {
+        super();
     }
 
-    @Override
-    public String getMessage() {
-        return message;
+    public UnauthorizedException(String s) {
+        super(s);
+    }
+
+    public UnauthorizedException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
+
+    public UnauthorizedException(Throwable throwable) {
+        super(throwable);
     }
 }
