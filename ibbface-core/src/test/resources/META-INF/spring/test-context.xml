@@ -59,6 +59,7 @@
                 <value>${test.table.ibb_user_online}</value>
                 <value>${test.table.ibb_api_resource}</value>
                 <value>${test.table.ibb_api_param}</value>
+                <value>${test.table.ibb_user_session}</value>
             </list>
         </property>
     </bean>

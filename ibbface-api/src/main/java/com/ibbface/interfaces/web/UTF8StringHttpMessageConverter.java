@@ -5,8 +5,6 @@
 package com.ibbface.interfaces.web;
 
 import com.google.common.base.Charsets;
-import com.ibbface.domain.model.user.User;
-import com.ibbface.util.RandomStrings;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -56,13 +54,5 @@ public class UTF8StringHttpMessageConverter extends StringHttpMessageConverter {
         } else {
             return Charsets.UTF_8;
         }
-    }
-
-    public static void main(String[] args) {
-        String salt = RandomStrings.random(16, true, true);
-        String email = "email@ibbface.com";
-        String password = "admin123456";
-        String hashPassword = User.hashPassword(password, salt);
-        System.out.println("salt=" + salt + ", hash_password=" + hashPassword);
     }
 }

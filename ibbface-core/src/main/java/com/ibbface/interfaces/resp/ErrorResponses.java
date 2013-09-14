@@ -10,5 +10,14 @@ package com.ibbface.interfaces.resp;
  * @since 1.0
  */
 public final class ErrorResponses {
-    private ErrorResponses() {}
+    private ErrorResponses() {
+    }
+
+    public static ErrorResponse byError(String error, String uri, String description, Object... params) {
+        ErrorCode errorCode = ErrorCodes.findByError(error);
+        if (errorCode == null) {
+            errorCode = DefaultErrorCode.UNKNOWN_ERROR;
+        }
+        return DefaultErrorResponse.from(errorCode, uri, description, params);
+    }
 }

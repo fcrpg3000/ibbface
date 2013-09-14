@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013. ibbface.com All rights reserved.
+  ~ @(#) app-security.xml 2013-09-08 22:41
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="restAuthenticationFilter" class="com.ibbface.interfaces.web.RestAuthenticationFilter">
+    </bean>
+
+    <bean id="shiroRealmService" class="com.ibbface.interfaces.realm.ShiroRealmService">
+        <constructor-arg index="0" ref="userService" />
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroRealmService" />
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+            depends-on="lifecycleBeanPostProcessor" />
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/auth/authorize" />
+        <property name="successUrl" value="/" />
+        <property name="filters">
+            <map key-type="java.lang.String">
+                <entry key="authc" value-ref="restAuthenticationFilter" />
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /auth/authorize = authc
+                /admin/** = roles[Admin]
+                /** = anon
+            </value>
+        </property>
+    </bean>
+
+</beans>

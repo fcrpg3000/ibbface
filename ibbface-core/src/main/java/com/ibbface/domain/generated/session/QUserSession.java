@@ -53,13 +53,13 @@ public class QUserSession extends com.mysema.query.sql.RelationalPathBase<QUserS
 
     public final NumberPath<Long> creationTime = createNumber("CREATION_TIME", Long.class);
 
-    public final NumberPath<Long> lastAccessTime = createNumber("LAST_ACCESS_TIME", Long.class);
+    public final NumberPath<Long> lastAccessedTime = createNumber("LAST_ACCESSED_TIME", Long.class);
 
     public final PrimaryKey<QUserSession> primary = createPrimaryKey(userId);
 
     public final Path<?>[] sequenceColumns = new Path<?>[]{
             userId, sessionId, accessToken, attributesData,
-            isValid, creationTime, lastAccessTime
+            isValid, creationTime, lastAccessedTime
     };
 
     public final Map<String, Path<?>> propPathMap = buildPropPathMap();
@@ -88,7 +88,7 @@ public class QUserSession extends com.mysema.query.sql.RelationalPathBase<QUserS
                 .put(PROP_ATTRIBUTES_DATA, attributesData)
                 .put(PROP_IS_VALID, isValid)
                 .put(PROP_CREATION_TIME, creationTime)
-                .put(PROP_LAST_ACCESSED_TIME, lastAccessTime)
+                .put(PROP_LAST_ACCESSED_TIME, lastAccessedTime)
                 .build();
     }
 }

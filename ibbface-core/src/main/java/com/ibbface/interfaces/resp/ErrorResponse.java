@@ -36,4 +36,6 @@ public interface ErrorResponse extends Serializable {
      * Returns this error response error uri.
      */
     public String getErrorUri();
+
+    public String toJSONString();
 }

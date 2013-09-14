@@ -10,6 +10,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 import com.ibbface.domain.shared.AbstractEntity;
+import com.ibbface.util.RandomStrings;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -36,6 +37,25 @@ public class UserSession extends AbstractEntity<Long, UserSession> implements Se
     public static final String PROP_LAST_ACCESSED_TIME = "lastAccessedTime";
     public static final String PROP_CREATION_TIME = "creationTime";
 
+    public static String generateSessionId() {
+        return RandomStrings.randomAlphanumeric(32).toUpperCase();
+    }
+
+    public static String newAccessToken() {
+        return RandomStrings.randomAlphanumeric(16);
+    }
+
+    public static UserSession newSession(Long userId) {
+        long timeNow = System.currentTimeMillis();
+        UserSession session = new UserSession(userId);
+        session.setSessionId(generateSessionId());
+        session.setAccessToken(newAccessToken());
+        session.setValid(true);
+        session.setCreationTime(timeNow);
+        session.setLastAccessedTime(timeNow);
+        return session;
+    }
+
     private Long userId;
     private String sessionId;
     private String accessToken;
@@ -45,6 +65,13 @@ public class UserSession extends AbstractEntity<Long, UserSession> implements Se
     private long lastAccessedTime;
 
     private Map<String, Object> attributesMap = Maps.newHashMap();
+
+    public UserSession() {
+    }
+
+    public UserSession(Long userId) {
+        setUserId(userId);
+    }
 
     /**
      * Sets the {@link UserSession} id ({@code userId}).

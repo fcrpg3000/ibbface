@@ -5,8 +5,19 @@
 
 package com.ibbface.interfaces.resp;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONCreator;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.google.common.base.Charsets;
+import com.google.common.io.Closer;
+import com.google.common.io.LineReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The {@link ErrorCode} interface default implementation.
@@ -17,12 +28,66 @@ import com.alibaba.fastjson.annotation.JSONField;
 public final class DefaultErrorCode implements ErrorCode {
     private static final long serialVersionUID = 1L;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultErrorCode.class);
+
+    private static final Map<String, DefaultErrorCode> data = new HashMap<String, DefaultErrorCode>(100);
+    private static final Map<String, String> errorCodeMap = new HashMap<String, String>(100);
+
+    public static final DefaultErrorCode UNKNOWN_ERROR = newError("10000", "unknown_error",
+            "System unknown error");
+
+    static {
+        Closer closer = Closer.create();
+        try {
+            InputStream input = DefaultErrorCode.class.getResourceAsStream(
+                    "/META-INF/data/service_error.data");
+            InputStreamReader reader = closer.register(new InputStreamReader(input, Charsets.UTF_8));
+            LineReader lineReader = new LineReader(reader);
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#") || !line.startsWith("{")) {
+                    continue;
+                }
+                JSON.parseObject(line, DefaultErrorCode.class);
+            }
+            LOGGER.info("Service error data reader completion!");
+        } catch (Exception ex) {
+            LOGGER.error("Read classpath:/META-INF/data/service_error.data file error: ", ex);
+        } finally {
+            try {
+                closer.close();
+            } catch (Exception ex) {
+                // ignore
+            }
+        }
+    }
+
     @JSONCreator
     public static DefaultErrorCode newError(
-            @JSONField(name = ERROR_CODE_KEY) String code,
-            @JSONField(name = ERROR_KEY) String error,
-            @JSONField(name = ERROR_DESCRIPTION_KEY) String description) {
-        return new DefaultErrorCode(code, error, description);
+            @JSONField(name = "code") String code,
+            @JSONField(name = "error") String error,
+            @JSONField(name = "description") String description) {
+        return putIfPresent(code, error, description);
+    }
+
+    static DefaultErrorCode putIfPresent(String code, String error, String description) {
+        DefaultErrorCode exists = data.get(code);
+        if (exists == null) {
+            exists = new DefaultErrorCode(code, error, description);
+            data.put(code, exists);
+            errorCodeMap.put(error, code);
+        }
+        return exists;
+    }
+
+    static DefaultErrorCode findByCode(String code) {
+        return data.get(code);
+    }
+
+    static DefaultErrorCode findByError(String error) {
+        final String code = errorCodeMap.get(error);
+        return code == null ? null : data.get(code);
     }
 
     private final String code;

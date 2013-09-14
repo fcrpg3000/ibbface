@@ -19,7 +19,7 @@
 
     <context:property-placeholder location="classpath:/META-INF/config/app-*.properties" />
 
-    <context:component-scan base-package="com.ibbface.base, com.ibbface.service" use-default-filters="false">
+    <context:component-scan base-package="com.ibbface.base, com.ibbface.service, com.ibbface.interfaces" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />

@@ -17,9 +17,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 public class LoginAccount extends UsernamePasswordToken {
     private static final long serialVersionUID = 1L;
 
-    public static final String PROP_CAPTCHA = "captcha";
-
     private String captcha;
+    private String clientId;
+    private String clientSecret;
 
     /**
      * JavaBeans compatible no-arg constructor.
@@ -28,12 +28,17 @@ public class LoginAccount extends UsernamePasswordToken {
         super();
     }
 
+    public LoginAccount(UsernamePasswordToken token, String captcha) {
+        super(token.getUsername(), token.getPassword(), token.isRememberMe(), token.getHost());
+        this.captcha = captcha;
+    }
+
     /**
      * Constructs a new {@code LoginAccount} encapsulating the username and password submitted
      * during an authentication attempt, with a <tt>null</tt> {@link #getHost() host} and
      * a <tt>rememberMe</tt> default newError <tt>false</tt>
      * <p/>
-     * This is a convience constructor and maintains the password internally via a character
+     * This is a convenience constructor and maintains the password internally via a character
      * array, i.e. <tt>password.toCharArray();</tt>.  Note that storing a password as a String
      * in your code could have possible security implications as noted in the class JavaDoc.
      *
@@ -107,13 +112,30 @@ public class LoginAccount extends UsernamePasswordToken {
         this.captcha = captcha;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
+
     /**
      * Clears out (nulls) the username, password, rememberMe, and inetAddress.  The password bytes are explicitly set to
      * <tt>0x00</tt> before {@code null} to eliminate the possibility newError memory access at a later time.
      */
-    @Override
     public void clear() {
         super.clear();
+        clientId = null;
+        clientSecret = null;
         captcha = null;
     }
 
@@ -125,6 +147,8 @@ public class LoginAccount extends UsernamePasswordToken {
                 .add("rememberMe", isRememberMe())
                 .add("host", getHost())
                 .add("captcha", getCaptcha())
+                .add("clientId", getClientId())
+                .add("clientSecret", getClientSecret())
                 .toString();
     }
 }

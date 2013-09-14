@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
  * User (Account) Entity.
@@ -84,6 +85,15 @@ public class User extends BaseUser {
         bannedUser.setCreatedTime(user.getDisabledStart());
         bannedUser.setLastModifiedTime(user.getDisabledStart());
         return bannedUser.operator(operator);
+    }
+
+    /**
+     * Generates and returns a random salt of the specified length .
+     *
+     * @param length the salt string length.
+     */
+    public static String generateSalt(int length) {
+        return RandomStrings.random(length, true, true);
     }
 
     public static String hashPassword(final String pwd, final String salt) {
@@ -168,6 +178,20 @@ public class User extends BaseUser {
         super.setHashPassword(hashPwd);
         super.setPasswordSalt(salt);
         return this;
+    }
+
+    /**
+     * Returns {@code true} if this {@link #getHashPassword()} equals the specified {@code password},
+     * otherwise {@code false}.
+     *
+     * @param password the match password.
+     */
+    public boolean match(String password) {
+        if (isNullOrEmpty(password) || getHashPassword() == null) {
+            return false;
+        }
+        String thatHashPwd = hashPassword(password, getPasswordSalt());
+        return getHashPassword().equalsIgnoreCase(thatHashPwd);
     }
 
     /**

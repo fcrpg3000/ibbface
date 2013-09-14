@@ -1,0 +1,24 @@
+# Copyright (C) 2013 ibbface.com All rights reserved.
+# Service error code data
+
+# commons error code
+{"code":"20001","error":"required_ids","description":"IDs is null"}
+{"code":"20002","error":"required_uid","description":"Uid parameter is null"}
+{"code":"20003","error":"user_not_found","description":"User does not exist"}
+{"code":"20004","error":"unsupported_image_type","description":"Unsupported image type, only JPG(JPEG), GIF, PNG"}
+
+{"code":"21301","error":"auth_failed","description":"Auth failed"}
+{"code":"21302","error":"username_or_password_error","description":"Username or password error"}
+{"code":"21303","error":"auth_limit","description":"Username and password auth out of rate limit"}
+{"code":"21304","error":"version_rejected","description":"Version rejected"}
+{"code":"21305","error":"parameter_absent","description":"Parameter absent"}
+{"code":"21306","error":"parameter_rejected","description":"Parameter rejected"}
+{"code":"21307","error":"timestamp_refused","description":"Timestamp refused"}
+{"code":"21309","error":"unsupported_signature","description":"Unsupported signature"}
+{"code":"21310","error":"invalid_signature","description":"Invalid signature"}
+{"code":"21314","error":"token_used","description":"Token used"}
+{"code":"21315","error":"token_expired","description":"Token expired"}
+{"code":"21316","error":"invalid_token","description":"Token invalid"}
+{"code":"21317","error":"token_rejected","description":"Token rejected"}
+{"code":"21318","error":"token_rejected","description":"Token rejected"}
+{"code":"21320","error":"oauth2_https","description":"OAuth2 must use https"}

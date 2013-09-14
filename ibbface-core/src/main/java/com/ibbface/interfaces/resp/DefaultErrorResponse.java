@@ -5,6 +5,7 @@
 
 package com.ibbface.interfaces.resp;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.base.Objects;
 
@@ -15,16 +16,31 @@ import com.google.common.base.Objects;
 public class DefaultErrorResponse implements ErrorResponse {
     private static final long serialVersionUID = 1L;
 
-    public static DefaultErrorResponse from(ErrorCode code, String errorUri) {
-        return new DefaultErrorResponse(code, errorUri);
+    public static DefaultErrorResponse from(ErrorCode code, String errorUri, Object... descParams) {
+        return new DefaultErrorResponse(code, errorUri, descParams);
+    }
+
+    public static DefaultErrorResponse from(ErrorCode code, String errorUri,
+                                            String errorDescription, Object... descParams) {
+        return new DefaultErrorResponse(code, errorUri, errorDescription, descParams);
     }
 
     final ErrorCode errorCode;
     final String errorUri;
+    String errorDescription;
 
-    DefaultErrorResponse(ErrorCode errorCode, String errorUri) {
+    DefaultErrorResponse(ErrorCode errorCode, String errorUri, Object... descParams) {
+        this(errorCode, errorUri, null, descParams);
+    }
+
+    DefaultErrorResponse(ErrorCode errorCode, String errorUri,
+                         String errorDescription, Object... descParams) {
         this.errorCode = errorCode;
         this.errorUri = errorUri;
+        this.errorDescription = errorDescription == null ?
+                (errorCode.getDescription().contains("%s") ?
+                        String.format(errorCode.getDescription(), descParams) :
+                        errorCode.getDescription()) : errorDescription;
     }
 
     /**
@@ -45,18 +61,22 @@ public class DefaultErrorResponse implements ErrorResponse {
         return errorCode.getError();
     }
 
+    @JSONField(name = ERROR_URI_KEY)
+    public String getErrorUri() {
+        return errorUri;
+    }
+
     /**
      * Returns this error response description.
      */
     @Override
     @JSONField(name = ErrorCode.ERROR_DESCRIPTION_KEY)
     public String getErrorDescription() {
-        return errorCode.getDescription();
+        return errorDescription;
     }
 
-    @JSONField(name = ERROR_URI_KEY)
-    public String getErrorUri() {
-        return errorUri;
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
     }
 
     @Override
@@ -83,5 +103,10 @@ public class DefaultErrorResponse implements ErrorResponse {
                 .add("errorCode", errorCode)
                 .add("errorUri", getErrorUri())
                 .toString();
+    }
+
+    @Override
+    public String toJSONString() {
+        return JSON.toJSONString(this);
     }
 }

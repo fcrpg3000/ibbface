@@ -18,6 +18,8 @@
          http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <import resource="app-config.xml" />
+    <import resource="app-security.xml" />
+    <import resource="app-cache.xml" />
 
     <!-- Druid 数据库源配置 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
