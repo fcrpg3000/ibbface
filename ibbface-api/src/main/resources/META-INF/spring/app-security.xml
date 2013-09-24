@@ -12,8 +12,15 @@
     <bean id="restAuthenticationFilter" class="com.ibbface.interfaces.web.RestAuthenticationFilter">
     </bean>
 
+    <bean id="shiroRedisCacheManager" class="com.ibbface.base.cache.shiro.ShiroRedisCacheManager">
+        <constructor-arg ref="sessionRedisTemplate" />
+    </bean>
+
     <bean id="shiroRealmService" class="com.ibbface.interfaces.realm.ShiroRealmService">
         <constructor-arg index="0" ref="userService" />
+        <property name="authenticationCachingEnabled" value="true" />
+        <property name="cacheManager" ref="shiroRedisCacheManager" />
+        <property name="credentialsMatcher" ref="userCredentialsMatcher" />
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

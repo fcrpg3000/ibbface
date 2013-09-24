@@ -6,7 +6,11 @@
 package com.ibbface.interfaces.realm;
 
 import com.google.common.base.Objects;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+
+import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
 
 /**
  * A simple username/password authentication token to support the most widely-used authentication mechanism.
@@ -16,6 +20,20 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  */
 public class LoginAccount extends UsernamePasswordToken {
     private static final long serialVersionUID = 1L;
+
+    public static LoginAccount authToken2LoginAccount(final AuthenticationToken authToken) {
+        LoginAccount loginAccount;
+        if (authToken instanceof LoginAccount) {
+            loginAccount = (LoginAccount) authToken;
+        } else {
+            UsernamePasswordToken token = (UsernamePasswordToken) authToken;
+            loginAccount = new LoginAccount(token, null);
+        }
+        if (loginAccount.getClientId() == null || loginAccount.getClientSecret() == null) {
+            throw new AuthenticationException(INVALID_REQUEST.getError());
+        }
+        return loginAccount;
+    }
 
     private String captcha;
     private String clientId;

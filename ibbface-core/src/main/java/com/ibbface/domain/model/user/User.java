@@ -11,6 +11,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.ibbface.domain.model.user.base.BaseUser;
 import com.ibbface.util.RandomStrings;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
@@ -258,5 +259,10 @@ public class User extends BaseUser {
                 getThumbAvatarUri(), getSpareEmail(), getRoleData(), isActivated(), isDisabled(),
                 getDisabledStart(), getDisabledEnd(), getCreatedTime(), getLastModifiedTime()
         };
+    }
+
+    public static void main(String[] args) {
+        System.out.println(String.format("Basic %s",
+                Base64.encodeBase64String("1234567:fuchun".getBytes())));
     }
 }

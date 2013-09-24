@@ -45,7 +45,7 @@
     <bean id="queryRedisTemplate" parent="abstractRedisTemplate"
           p:connectionFactory-ref="jedisConnectionFactory2" />
 
-    <bean id="cacheCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+    <bean id="defaultCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg ref="cacheRedisTemplate" />
         <property name="defaultExpiration" value="900" />
     </bean>
@@ -59,6 +59,6 @@
         <constructor-arg ref="queryRedisTemplate" />
     </bean>
 
-    <cache:annotation-driven cache-manager="cacheCacheManager" />
+    <cache:annotation-driven cache-manager="defaultCacheManager" />
 
 </beans>

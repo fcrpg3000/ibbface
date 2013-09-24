@@ -12,10 +12,11 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -24,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import static com.ibbface.interfaces.resp.ErrorCode.AUTH_FAILED;
 import static com.ibbface.interfaces.resp.ErrorCode.USERNAME_OR_PASSWORD_ERROR;
-import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
 
 /**
  * @author Fuchun
@@ -45,6 +45,19 @@ public class ShiroRealmService extends AuthorizingRealm {
         this.userService = userService;
     }
 
+    @Override
+    protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AuthorizationCacheKey principals(PrincipalCollection): " +
+                    "{}, concrete class: {}", principals, principals.getClass());
+        }
+        User user = (User) getAvailablePrincipal(principals);
+        if (user != null) {
+            return String.format("authz_info:%s", user.getUserId());
+        }
+        return principals;
+    }
+
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store.  When returning
      * an instance from this method, you might want to consider using an instance of
@@ -56,7 +69,13 @@ public class ShiroRealmService extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        User user = (User) getAvailablePrincipal(principals);
+        if (user == null) {
+            throw new AuthorizationException("The account not found in application.");
+        }
+        authorizationInfo.setRoles(user.getRoleNames());
+        return authorizationInfo;
     }
 
     /**
@@ -79,23 +98,39 @@ public class ShiroRealmService extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authToken)
             throws AuthenticationException {
-        LoginAccount loginAccount = authToken2LoginAccount(authToken);
-        if (loginAccount.getClientId() == null || loginAccount.getClientSecret() == null) {
-            throw new AuthenticationException(INVALID_REQUEST.getError());
-        }
-        String password = new String(loginAccount.getPassword());
+        LoginAccount loginAccount = LoginAccount.authToken2LoginAccount(authToken);
+//        String password = new String(loginAccount.getPassword());
 
         User user = userService.getEnabledUser(loginAccount.getUsername());
         if (user == null) {
             return null;
         }
-        String hashPassword = User.hashPassword(password, user.getPasswordSalt());
-        ((LoginAccount) authToken).setPassword(hashPassword.toCharArray());
+//        String hashPassword = User.hashPassword(password, user.getPasswordSalt());
+//        ((LoginAccount) authToken).setPassword(hashPassword.toCharArray());
 //        if (!user.match(password)) {
 //            throw new AuthenticationException("authc.m.passwordError");
 //        }
         
         return new SimpleAuthenticationInfo(user, user.getHashPassword(), getName());
+    }
+
+    /**
+     * Returns the key under which {@link org.apache.shiro.authc.AuthenticationInfo} instances are cached if authentication caching is enabled.
+     * This implementation defaults to returning the token's
+     * {@link org.apache.shiro.authc.AuthenticationToken#getPrincipal() principal}, which is usually a username in
+     * most applications.
+     * <h3>Cache Invalidation on Logout</h3>
+     * <b>NOTE:</b> If you want to be able to invalidate an account's cached {@code AuthenticationInfo} on logout, you
+     * must ensure the {@link #getAuthenticationCacheKey(org.apache.shiro.subject.PrincipalCollection)} method returns
+     * the same value as this method.
+     *
+     * @param token the authentication token for which any successful authentication will be cached.
+     * @return the cache key to use to cache the associated {@link org.apache.shiro.authc.AuthenticationInfo} after a successful authentication.
+     * @since 1.2
+     */
+    @Override
+    protected Object getAuthenticationCacheKey(AuthenticationToken token) {
+        return String.format("authc_info:%s", token.getPrincipal());
     }
 
     /**
@@ -124,13 +159,5 @@ public class ShiroRealmService extends AuthorizingRealm {
                     AllowAllCredentialsMatcher.class.getName());
             throw new AuthenticationException(AUTH_FAILED);
         }
-    }
-
-    private LoginAccount authToken2LoginAccount(final AuthenticationToken authToken) {
-        if (authToken instanceof LoginAccount) {
-            return (LoginAccount) authToken;
-        }
-        UsernamePasswordToken token = (UsernamePasswordToken) authToken;
-        return new LoginAccount(token, null);
     }
 }
