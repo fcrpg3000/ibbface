@@ -1014,5 +1014,6 @@
         <xalan.version>2.7.1</xalan.version>
         <xbean.version>3.11.1</xbean.version>
         <xerces.version>2.10.0</xerces.version>
+        <bouncycastle.jdk16.version>1.46</bouncycastle.jdk16.version>
     </properties>
 </project>

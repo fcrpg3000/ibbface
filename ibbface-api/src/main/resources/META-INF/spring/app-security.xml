@@ -23,6 +23,12 @@
         <property name="credentialsMatcher" ref="userCredentialsMatcher" />
     </bean>
 
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="cacheManager" ref="shiroRedisCacheManager" />
+        <property name="globalSessionTimeout" value="${session.timeout}" />
+        <property name="sessionIdCookieEnabled" value="${session.idCookie.enabled}" />
+    </bean>
+
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroRealmService" />
     </bean>

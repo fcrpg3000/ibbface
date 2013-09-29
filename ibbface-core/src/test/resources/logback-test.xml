@@ -21,8 +21,9 @@
     <logger name="org.springframework" level="info" />
 
     <logger name="org.springframework.beans" level="debug" />
+    <logger name="com.ibbface.security.crypto" level="debug" />
 
-    <root level="warn">
+    <root level="info">
         <appender-ref ref="console" />
     </root>
 </configuration>
