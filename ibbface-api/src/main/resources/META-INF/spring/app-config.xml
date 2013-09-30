@@ -17,7 +17,20 @@
          http://www.springframework.org/schema/jdbc
          http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
-    <context:property-placeholder location="classpath:/META-INF/config/app-*.properties" />
+    <bean id="propertyPlaceholderConfigurer" class="com.ibbface.config.SecurityPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/META-INF/config/app-config.properties</value>
+                <value>classpath:/META-INF/config/app-database.properties</value>
+            </list>
+        </property>
+        <property name="encryptProps">
+            <set>
+                <value>dataSource.username</value>
+                <value>dataSource.password</value>
+            </set>
+        </property>
+    </bean>
 
     <context:component-scan base-package="com.ibbface.base, com.ibbface.service, com.ibbface.interfaces" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
