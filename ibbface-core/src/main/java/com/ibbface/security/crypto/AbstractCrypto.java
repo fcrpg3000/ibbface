@@ -42,7 +42,7 @@ public abstract class AbstractCrypto {
     public static final String BOUNCY_CASTLE_PROVIDER = "BC";
 
     static {
-        Security.insertProviderAt(new BouncyCastleProvider(), 1);
+        Security.addProvider(new BouncyCastleProvider());
     }
 
     protected final Monitor ENCRYPT_MONITOR = new Monitor();
