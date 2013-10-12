@@ -134,6 +134,10 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk16</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-ext-jdk16</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -265,6 +269,11 @@
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk16</artifactId>
+                <version>${bouncycastle.jdk16.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-ext-jdk16</artifactId>
                 <version>${bouncycastle.jdk16.version}</version>
             </dependency>
 

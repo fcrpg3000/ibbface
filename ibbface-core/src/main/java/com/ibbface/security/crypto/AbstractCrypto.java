@@ -20,12 +20,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.Security;
+import java.security.*;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Arrays;
 
@@ -47,7 +42,7 @@ public abstract class AbstractCrypto {
     public static final String BOUNCY_CASTLE_PROVIDER = "BC";
 
     static {
-        Security.addProvider(new BouncyCastleProvider());
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
     }
 
     protected final Monitor ENCRYPT_MONITOR = new Monitor();
@@ -100,10 +95,12 @@ public abstract class AbstractCrypto {
 
     protected Cipher getCipher(String transformation, String provider) throws
             NoSuchAlgorithmException, NoSuchPaddingException {
+        Cipher c;
         try {
-            return provider == null ?
+            c = provider == null ?
                     Cipher.getInstance(transformation) :
                     Cipher.getInstance(transformation, provider);
+            return c;
         } catch (NoSuchProviderException ex) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("The current system have no such '{}' provider, " +
@@ -123,6 +120,9 @@ public abstract class AbstractCrypto {
         } catch (NoSuchPaddingException ex) {
             throw new CryptoException(String.format(
                     "Current system have no such '%s' padding.", transformation), ex);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Current provider is {}.", c.getProvider().getName());
         }
         initCipher(c, opmode, transformation);
         return c;

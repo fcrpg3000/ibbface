@@ -29,7 +29,7 @@ public final class AES extends AbstractCrypto {
             keyGen192 = KeyGenerator.getInstance("AES", BOUNCY_CASTLE_PROVIDER);
             keyGen256 = KeyGenerator.getInstance("AES", BOUNCY_CASTLE_PROVIDER);
 
-            keyGen.init(new SecureRandom());
+            keyGen.init(128, new SecureRandom());
             keyGen192.init(192, new SecureRandom());
             keyGen256.init(256, new SecureRandom());
         } catch (NoSuchAlgorithmException ex) {
