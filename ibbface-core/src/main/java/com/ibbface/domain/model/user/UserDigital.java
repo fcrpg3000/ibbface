@@ -6,6 +6,7 @@
 package com.ibbface.domain.model.user;
 
 import com.ibbface.domain.model.user.base.BaseUserDigital;
+import com.ibbface.domain.shared.QueryValue;
 
 /**
  * User digital entity class.
@@ -13,7 +14,7 @@ import com.ibbface.domain.model.user.base.BaseUserDigital;
  * @author Fuchun
  * @since 1.0
  */
-public class UserDigital extends BaseUserDigital {
+public class UserDigital extends BaseUserDigital implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -117,6 +118,7 @@ public class UserDigital extends BaseUserDigital {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getUserId(), getUserName(), getTotalScore(), getUserScore(),

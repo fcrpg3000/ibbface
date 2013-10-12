@@ -7,6 +7,7 @@ package com.ibbface.domain.model.user;
 
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.user.base.BaseUserOnline;
+import com.ibbface.domain.shared.QueryValue;
 import com.ibbface.util.RandomStrings;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -19,7 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class UserOnline extends BaseUserOnline {
+public class UserOnline extends BaseUserOnline implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public static String generateSessionId(@Nonnull Long userId) {
@@ -74,6 +75,7 @@ public class UserOnline extends BaseUserOnline {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getUserId(), getSessionId(), getAccessToken(), getPrevClientIp(),

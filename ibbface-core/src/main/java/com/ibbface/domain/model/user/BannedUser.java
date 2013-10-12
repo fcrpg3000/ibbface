@@ -7,6 +7,7 @@ package com.ibbface.domain.model.user;
 
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.user.base.BaseBannedUser;
+import com.ibbface.domain.shared.QueryValue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -16,7 +17,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class BannedUser extends BaseBannedUser {
+public class BannedUser extends BaseBannedUser implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public BannedUser() {
@@ -66,6 +67,7 @@ public class BannedUser extends BaseBannedUser {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getUserId(), getUserName(), getOperatorId(), getOperatorName(),

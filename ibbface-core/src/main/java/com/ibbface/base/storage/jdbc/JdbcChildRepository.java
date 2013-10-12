@@ -1,40 +1,44 @@
 /*
  * Copyright (c) 2013. ibbface.com All rights reserved.
- * @(#) JdbcUserDigitalRepository.java 2013-08-01 22:12
+ * @(#) JdbcChildRepository.java 2013-09-30 16:55
  */
 
 package com.ibbface.base.storage.jdbc;
 
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
-import com.ibbface.domain.generated.user.QUserDigital;
-import com.ibbface.domain.model.user.UserDigital;
-import com.ibbface.repository.user.UserDigitalRepository;
+import com.ibbface.domain.generated.user.QChild;
+import com.ibbface.domain.model.user.Child;
+import com.ibbface.repository.user.ChildRepository;
 import com.mysema.query.sql.RelationalPath;
+import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
- * {@link UserDigitalRepository} default implementation used query dsl jdbc.
- *
  * @author Fuchun
  * @since 1.0
  */
-@Repository("userDigitalRepository")
-public class JdbcUserDigitalRepository extends QueryDslJdbcSupport<UserDigital, Long>
-        implements UserDigitalRepository {
+@Repository("childRepository")
+public class JdbcChildRepository extends QueryDslJdbcSupport<Child, Long>
+        implements ChildRepository {
 
-    private final QUserDigital qUserDigital = QUserDigital.UserDigital;
+    private final QChild qChild = QChild.qChild;
 
     /**
-     * Returns {@code true} if the entity's ID is auto_increment,
-     * otherwise {@code false}.
+     * Query and return all {@link com.ibbface.domain.model.user.Child} of the specified user's.
+     * <p/>
+     * This method never returned {@code null}.
+     *
+     * @param userId the user id.
+     * @return all {@link com.ibbface.domain.model.user.Child} of the specified user's, or empty list.
      */
     @Override
-    protected boolean isAutoIncrement() {
-        return false;
+    public List<Child> findByUserId(Long userId) {
+        final SQLQuery sqlQuery = getQuery().where(qChild.userId.eq(userId));
+        return queryForList(sqlQuery);
     }
 
     /**
@@ -42,13 +46,13 @@ public class JdbcUserDigitalRepository extends QueryDslJdbcSupport<UserDigital, 
      */
     @Override
     protected RelationalPath<?> getQEntity() {
-        return QUserDigital.UserDigital;
+        return qChild;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     protected SimpleExpression<Long> getPkPath() {
-        return qUserDigital.userId;
+        return qChild.id;
     }
 
     /**
@@ -56,7 +60,7 @@ public class JdbcUserDigitalRepository extends QueryDslJdbcSupport<UserDigital, 
      */
     @Override
     protected Path<?>[] getAllColumns() {
-        return qUserDigital.allColumns;
+        return qChild.sequenceColumns;
     }
 
     /**
@@ -64,8 +68,7 @@ public class JdbcUserDigitalRepository extends QueryDslJdbcSupport<UserDigital, 
      */
     @Override
     protected Path<?>[] getColumnsNoId() {
-        final Path<?>[] allColumns = getAllColumns();
-        return Arrays.copyOfRange(allColumns, 1, allColumns.length);
+        return qChild.columnsWithoutId;
     }
 
     /**
@@ -75,6 +78,6 @@ public class JdbcUserDigitalRepository extends QueryDslJdbcSupport<UserDigital, 
      */
     @Override
     protected Path<?> getColumn(String prop) {
-        return qUserDigital.propPathMap.get(prop);
+        return qChild.propPathMap.get(prop);
     }
 }

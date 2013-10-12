@@ -10,6 +10,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 import com.ibbface.domain.shared.AbstractEntity;
+import com.ibbface.domain.shared.QueryValue;
 import com.ibbface.util.RandomStrings;
 
 import java.io.Serializable;
@@ -23,7 +24,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class UserSession extends AbstractEntity<Long, UserSession> implements Serializable {
+public class UserSession extends AbstractEntity<Long, UserSession>
+        implements Serializable, QueryValue {
     private static final long serialVersionUID = 1L;
     /**
      * 默认的会话Id在 Cookie 中保存的键名。
@@ -226,6 +228,7 @@ public class UserSession extends AbstractEntity<Long, UserSession> implements Se
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 userId, sessionId, accessToken, attributesData,

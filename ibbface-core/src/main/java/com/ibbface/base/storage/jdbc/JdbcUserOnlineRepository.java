@@ -6,7 +6,6 @@
 package com.ibbface.base.storage.jdbc;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.user.QUserOnline;
 import com.ibbface.domain.model.user.UserOnline;
@@ -14,18 +13,14 @@ import com.ibbface.repository.user.UserOnlineRepository;
 import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * {@link UserOnlineRepository} interface default implementation.
@@ -56,46 +51,10 @@ public class JdbcUserOnlineRepository extends QueryDslJdbcSupport<UserOnline, Lo
         return qUserOnline;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qUserOnline.userId.eq((Long) ids[0]);
-        }
-        Set<Long> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Long) serial);
-        }
-        return qUserOnline.userId.in(idSet);
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull UserOnline entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull UserOnline entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qUserOnline.userId;
     }
 
     /**

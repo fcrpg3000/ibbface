@@ -6,8 +6,11 @@
 package com.ibbface.domain.model.user;
 
 import com.google.common.base.Objects;
+import com.ibbface.domain.model.common.BloodType;
 import com.ibbface.domain.model.common.Constellation;
+import com.ibbface.domain.model.common.Zodiac;
 import com.ibbface.domain.model.user.base.BaseChild;
+import com.ibbface.domain.shared.QueryValue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -17,11 +20,13 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class Child extends BaseChild {
+public class Child extends BaseChild implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     private Gender gender;
     private Constellation constellation;
+    private BloodType bloodType;
+    private Zodiac zodiac;
 
     public Child() {
         super();
@@ -106,6 +111,41 @@ public class Child extends BaseChild {
         super.setConstellationId(constellation == null ? null : constellation.getId());
     }
 
+    @Override
+    public void setBloodTypeId(Short bloodTypeId) {
+        super.setBloodTypeId(bloodTypeId);
+        if (bloodTypeId != null && bloodTypeId > 0) {
+            bloodType = BloodType.get(bloodTypeId);
+        }
+    }
+
+    public BloodType getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
+        super.setBloodTypeId(bloodType == null ? null : bloodType.getId());
+    }
+
+    @Override
+    public void setZodiacId(Short zodiacId) {
+        super.setZodiacId(zodiacId);
+        if (zodiacId != null && zodiacId > 0) {
+            zodiac = Zodiac.get(zodiacId);
+        }
+    }
+
+    public Zodiac getZodiac() {
+        return zodiac;
+    }
+
+    public void setZodiac(Zodiac zodiac) {
+        this.zodiac = zodiac;
+        super.setZodiacId(zodiac == null ? null : zodiac.getId());
+    }
+
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getUserId(), getPetName(), getRealName(), getGenderCode(),

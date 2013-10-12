@@ -6,6 +6,7 @@
 package com.ibbface.domain.model.privilege;
 
 import com.ibbface.domain.model.privilege.base.BaseApiParam;
+import com.ibbface.domain.shared.QueryValue;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ import java.math.BigInteger;
  * @author Fuchun
  * @since 1.0
  */
-public class ApiParam extends BaseApiParam {
+public class ApiParam extends BaseApiParam implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public static ApiParam create(
@@ -81,6 +82,7 @@ public class ApiParam extends BaseApiParam {
         return null;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getResourceId(), getParamName(), getParamRule(),

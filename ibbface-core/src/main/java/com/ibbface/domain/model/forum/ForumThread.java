@@ -8,6 +8,7 @@ package com.ibbface.domain.model.forum;
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.common.Client;
 import com.ibbface.domain.model.forum.base.BaseForumThread;
+import com.ibbface.domain.shared.QueryValue;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,7 +20,7 @@ import java.util.Date;
  * @author Fuchun
  * @since 1.0
  */
-public class ForumThread extends BaseForumThread {
+public class ForumThread extends BaseForumThread implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public static final Short STATUS_DELETED = -1;
@@ -100,6 +101,7 @@ public class ForumThread extends BaseForumThread {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getIdAlias(), getUserId(), getForumId(), getTypeId(),

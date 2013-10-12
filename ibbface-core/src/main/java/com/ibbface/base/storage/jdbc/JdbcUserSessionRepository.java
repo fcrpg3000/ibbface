@@ -6,7 +6,6 @@
 package com.ibbface.base.storage.jdbc;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.session.QUserSession;
 import com.ibbface.domain.model.session.UserSession;
@@ -15,18 +14,14 @@ import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The {@link UserSessionRepository} implementation default.
@@ -57,46 +52,10 @@ public class JdbcUserSessionRepository extends QueryDslJdbcSupport<UserSession, 
         return qUserSession;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qUserSession.userId.eq((Long) ids[0]);
-        }
-        Set<Long> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Long) serial);
-        }
-        return qUserSession.userId.in(idSet);
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull UserSession entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull UserSession entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qUserSession.userId;
     }
 
     /**

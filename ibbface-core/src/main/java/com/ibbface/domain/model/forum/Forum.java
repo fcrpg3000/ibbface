@@ -7,6 +7,7 @@ package com.ibbface.domain.model.forum;
 
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.forum.base.BaseForum;
+import com.ibbface.domain.shared.QueryValue;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Fuchun
  * @since 1.0
  */
-public class Forum extends BaseForum implements Comparable<Forum> {
+public class Forum extends BaseForum implements Comparable<Forum>, QueryValue {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -143,6 +144,7 @@ public class Forum extends BaseForum implements Comparable<Forum> {
      * status, createdTime, lastModifiedTime.
      * </pre>
      */
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getIdAlias(), getTitle(), getSummary(), getSortOrder(),

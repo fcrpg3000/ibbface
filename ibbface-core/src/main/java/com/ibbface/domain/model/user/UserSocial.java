@@ -8,8 +8,7 @@ package com.ibbface.domain.model.user;
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.common.OpenProvider;
 import com.ibbface.domain.model.user.base.BaseUserSocial;
-
-import java.io.Serializable;
+import com.ibbface.domain.shared.QueryValue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -19,7 +18,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class UserSocial extends BaseUserSocial implements Serializable {
+public class UserSocial extends BaseUserSocial implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     private OpenProvider openProvider;
@@ -70,6 +69,7 @@ public class UserSocial extends BaseUserSocial implements Serializable {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getUserId(), getOpenUid(), getOpenProviderCode(), getAccessToken(),

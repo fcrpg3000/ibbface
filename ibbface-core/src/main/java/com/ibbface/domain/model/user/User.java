@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.ibbface.domain.model.user.base.BaseUser;
+import com.ibbface.domain.shared.QueryValue;
 import com.ibbface.util.RandomStrings;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -27,7 +28,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  * @author Fuchun
  * @since 1.0
  */
-public class User extends BaseUser {
+public class User extends BaseUser implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public static final String DEFAULT_HASH_PASSWORD_FORMAT = "%s{%s}";
@@ -251,6 +252,7 @@ public class User extends BaseUser {
                         new DateTime(getDisabledStart()).getYear() >= 80);
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getUserId(), getEmail(), getUserName(), getUserHandle(),

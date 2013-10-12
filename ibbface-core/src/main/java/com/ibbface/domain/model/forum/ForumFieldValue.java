@@ -6,6 +6,7 @@
 package com.ibbface.domain.model.forum;
 
 import com.ibbface.domain.model.forum.base.BaseForumFieldValue;
+import com.ibbface.domain.shared.QueryValue;
 
 /**
  * The forum's field value entity.
@@ -13,7 +14,7 @@ import com.ibbface.domain.model.forum.base.BaseForumFieldValue;
  * @author Fuchun
  * @since 1.0
  */
-public class ForumFieldValue extends BaseForumFieldValue {
+public class ForumFieldValue extends BaseForumFieldValue implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public ForumFieldValue() {
@@ -34,5 +35,16 @@ public class ForumFieldValue extends BaseForumFieldValue {
     @Override
     public ForumFieldValue update(ForumFieldValue other) {
         return this;
+    }
+
+    /**
+     * Returns this QueryValue all serializable field values.
+     */
+    @Override
+    public Object[] toArray() {
+        return new Object[] {
+                getId(), getFieldId(), getParentId(), getFieldName(),
+                getFieldValue(), getSortOrder(), getIsDefault()
+        };
     }
 }

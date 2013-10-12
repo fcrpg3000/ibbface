@@ -6,7 +6,6 @@
 package com.ibbface.base.storage.jdbc;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.privilege.QApiResource;
 import com.ibbface.domain.model.privilege.ApiResource;
@@ -15,16 +14,13 @@ import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -123,15 +119,6 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
     }
 
     /**
-     * Returns {@code true} if the entity's ID is auto_increment,
-     * otherwise {@code false}.
-     */
-    @Override
-    protected boolean isAutoIncrement() {
-        return true;
-    }
-
-    /**
      * Returns the T's {@code RelationalPath} object.
      */
     @Override
@@ -139,46 +126,10 @@ public class JdbcApiResourceRepository extends QueryDslJdbcSupport<ApiResource, 
         return qApiResource;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qApiResource.id.eq((Integer) ids[0]);
-        }
-        Set<Integer> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Integer) serial);
-        }
-        return qApiResource.id.in(idSet);
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull ApiResource entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull ApiResource entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Integer> getPkPath() {
+        return qApiResource.id;
     }
 
     /**

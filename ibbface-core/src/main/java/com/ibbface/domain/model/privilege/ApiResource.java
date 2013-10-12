@@ -8,6 +8,7 @@ package com.ibbface.domain.model.privilege;
 import com.google.common.base.Joiner;
 import com.ibbface.domain.model.privilege.base.BaseApiResource;
 import com.ibbface.domain.model.user.UserRole;
+import com.ibbface.domain.shared.QueryValue;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Fuchun
  * @since 1.0
  */
-public class ApiResource extends BaseApiResource {
+public class ApiResource extends BaseApiResource implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public static final Integer PARENT_PARENT_ID = 0;
@@ -165,6 +166,7 @@ public class ApiResource extends BaseApiResource {
         return Joiner.on("/").join(url, getVersion(), getBasePath());
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getParentId(), getRoleData(), getBasePath(), getDescription(),

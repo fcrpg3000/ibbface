@@ -7,7 +7,6 @@ package com.ibbface.base.storage.jdbc;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Range;
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.forum.QForumField;
 import com.ibbface.domain.model.forum.ForumField;
@@ -19,16 +18,12 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.MappingProjection;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * {@link ForumFieldRepository} interface default implementation.
@@ -43,15 +38,6 @@ public class JdbcForumFieldRepository extends QueryDslJdbcSupport<ForumField, Lo
     private final QForumField qForumField = QForumField.ForumField;
 
     /**
-     * Returns {@code true} if the entity's ID is auto_increment,
-     * otherwise {@code false}.
-     */
-    @Override
-    protected boolean isAutoIncrement() {
-        return true;
-    }
-
-    /**
      * Returns the T's {@code RelationalPath} object.
      */
     @Override
@@ -59,46 +45,10 @@ public class JdbcForumFieldRepository extends QueryDslJdbcSupport<ForumField, Lo
         return QForumField.ForumField;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qForumField.id.eq((Long) ids[0]);
-        }
-        Set<Long> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Long) serial);
-        }
-        return qForumField.id.in(idSet);
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull ForumField entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull ForumField entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qForumField.id;
     }
 
     /**

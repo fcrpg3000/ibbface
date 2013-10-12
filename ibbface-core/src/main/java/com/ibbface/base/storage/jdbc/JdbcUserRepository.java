@@ -5,7 +5,6 @@
 
 package com.ibbface.base.storage.jdbc;
 
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.generated.user.QUser;
 import com.ibbface.domain.model.user.User;
@@ -13,13 +12,8 @@ import com.ibbface.repository.user.UserRepository;
 import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Set;
 
 /**
  * @author Fuchun
@@ -32,15 +26,6 @@ public class JdbcUserRepository extends QueryDslJdbcSupport<User, Long>
     private final QUser qUser = QUser.User;
 
     /**
-     * Returns {@code true} if the entity's ID is auto_increment,
-     * otherwise {@code false}.
-     */
-    @Override
-    protected boolean isAutoIncrement() {
-        return true;
-    }
-
-    /**
      * Returns the T's {@code RelationalPath} object.
      */
     @Override
@@ -48,46 +33,10 @@ public class JdbcUserRepository extends QueryDslJdbcSupport<User, Long>
         return qUser;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qUser.userId.eq((Long) ids[0]);
-        }
-        Set<Long> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Long) serial);
-        }
-        return qUser.userId.in(idSet);
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull User entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull User entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qUser.userId;
     }
 
     /**

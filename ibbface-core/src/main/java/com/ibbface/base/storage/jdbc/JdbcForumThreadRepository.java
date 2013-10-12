@@ -7,7 +7,6 @@ package com.ibbface.base.storage.jdbc;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
-import com.google.common.collect.Sets;
 import com.ibbface.base.storage.support.QueryDslJdbcSupport;
 import com.ibbface.domain.exception.EntityNotFoundException;
 import com.ibbface.domain.generated.forum.QForumThread;
@@ -17,8 +16,8 @@ import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,13 +26,10 @@ import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -53,52 +49,14 @@ public class JdbcForumThreadRepository extends QueryDslJdbcSupport<ForumThread, 
      * {@inheritDoc}
      */
     @Override
-    protected boolean isAutoIncrement() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected RelationalPath<?> getQEntity() {
         return qForumThread;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        if (ids.length == 0) {
-            throw new IllegalArgumentException(
-                    "The given primary key `ids` must not be empty.");
-        }
-        if (ids.length == 1) {
-            return qForumThread.id.eq((Long) ids[0]);
-        }
-        Set<Long> idSet = Sets.newHashSet();
-        for (Serializable serial : ids) {
-            idSet.add((Long) serial);
-        }
-        return qForumThread.id.in(idSet);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull ForumThread entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull ForumThread entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qForumThread.id;
     }
 
     /**

@@ -7,6 +7,7 @@ package com.ibbface.domain.model.forum;
 
 import com.google.common.base.Objects;
 import com.ibbface.domain.model.forum.base.BaseForumField;
+import com.ibbface.domain.shared.QueryValue;
 
 /**
  * {@link Forum} field information entity.
@@ -14,7 +15,7 @@ import com.ibbface.domain.model.forum.base.BaseForumField;
  * @author Fuchun
  * @since 1.0
  */
-public class ForumField extends BaseForumField {
+public class ForumField extends BaseForumField implements QueryValue {
     private static final long serialVersionUID = 1L;
 
     public ForumField() {
@@ -47,6 +48,7 @@ public class ForumField extends BaseForumField {
         return this;
     }
 
+    @Override
     public Object[] toArray() {
         return new Object[]{
                 getId(), getForumId(), getFieldName(), getSummary(),

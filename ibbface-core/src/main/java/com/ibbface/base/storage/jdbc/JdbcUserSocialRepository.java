@@ -15,11 +15,8 @@ import com.ibbface.repository.user.UserSocialRepository;
 import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.SimpleExpression;
 
-import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,15 +29,6 @@ public class JdbcUserSocialRepository extends QueryDslJdbcSupport<UserSocial, Lo
     private final QUserSocial qUserSocial = QUserSocial.qUserSocial;
 
     /**
-     * Returns {@code true} if the entity's ID is auto_increment,
-     * otherwise {@code false}.
-     */
-    @Override
-    protected boolean isAutoIncrement() {
-        return true;
-    }
-
-    /**
      * Returns the T's {@code RelationalPath} object.
      */
     @Override
@@ -48,35 +36,10 @@ public class JdbcUserSocialRepository extends QueryDslJdbcSupport<UserSocial, Lo
         return qUserSocial;
     }
 
-    /**
-     * Returns primary key predicate used given ids.
-     *
-     * @param ids the given ids (primary keys)
-     */
     @Override
-    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
-        return null;  //To change body newError implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * Returns sorted values newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getAllValues(@Nonnull UserSocial entity) {
-        return entity.toArray();
-    }
-
-    /**
-     * Returns sorted values unless primary value newError the specified entity.
-     *
-     * @param entity entity object.
-     */
-    @Override
-    protected Object[] getValuesNoId(@Nonnull UserSocial entity) {
-        Object[] allValues = getAllValues(entity);
-        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    @SuppressWarnings("unchecked")
+    protected SimpleExpression<Long> getPkPath() {
+        return qUserSocial.id;
     }
 
     /**

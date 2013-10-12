@@ -9,8 +9,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.ibbface.repository.BaseRepository;
 import com.ibbface.domain.shared.Entity;
+import com.ibbface.domain.shared.QueryValue;
+import com.ibbface.repository.BaseRepository;
 import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
@@ -20,6 +21,7 @@ import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.ComparableExpressionBase;
+import com.mysema.query.types.expr.SimpleExpression;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -125,20 +128,39 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
     /**
      * Returns {@code true} if the entity's ID is auto_increment,
      * otherwise {@code false}.
+     * Default value is {@code true}.
      */
-    protected abstract boolean isAutoIncrement();
+    protected boolean isAutoIncrement() {
+        return true;
+    }
 
     /**
      * Returns the T's {@code RelationalPath} object.
      */
     protected abstract RelationalPath<?> getQEntity();
 
+    protected abstract <PK extends Serializable> SimpleExpression<PK> getPkPath();
+
     /**
      * Returns primary key predicate used given ids.
      *
      * @param ids the given ids (primary keys)
      */
-    protected abstract <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids);
+    @SuppressWarnings("unchecked")
+    protected <PK extends Serializable> Predicate primaryKeyPredicate(@Nonnull PK... ids) {
+        if (ids.length == 0) {
+            throw new IllegalArgumentException(
+                    "The given primary key `ids` must not be empty.");
+        }
+        if (ids.length == 1) {
+            return getPkPath().eq(ids[0]);
+        }
+        Set<PK> idSet = Sets.newHashSet();
+        for (Serializable serial : ids) {
+            idSet.add((PK) serial);
+        }
+        return getPkPath().in(idSet);
+    }
 
     /**
      * Returns primary keys predicate used given ids.
@@ -155,14 +177,22 @@ public abstract class QueryDslJdbcSupport<T extends Entity<ID, T>, ID extends Se
      *
      * @param entity entity object.
      */
-    protected abstract Object[] getAllValues(@Nonnull T entity);
+    protected Object[] getAllValues(@Nonnull T entity) {
+        if (entity instanceof QueryValue) {
+            return ((QueryValue) entity).toArray();
+        }
+        return null;
+    }
 
     /**
      * Returns sorted values unless primary value newError the specified entity.
      *
      * @param entity entity object.
      */
-    protected abstract Object[] getValuesNoId(@Nonnull T entity);
+    protected Object[] getValuesNoId(@Nonnull T entity) {
+        Object[] allValues = getAllValues(entity);
+        return Arrays.copyOfRange(allValues, 1, allValues.length);
+    }
 
     /**
      * Returns all entity's query dsl path.
