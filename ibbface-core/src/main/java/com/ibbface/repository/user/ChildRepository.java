@@ -19,7 +19,8 @@ import java.util.List;
 public interface ChildRepository extends BaseRepository<Child, Long> {
 
     /**
-     * Query and return all {@link Child} of the specified user's.
+     * Query and return all {@link Child} of the specified user's, or empty list
+     * if the specified user have not input child information.
      * <p/>
      * This method never returned {@code null}.
      *

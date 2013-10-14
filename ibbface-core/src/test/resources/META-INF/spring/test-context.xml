@@ -60,6 +60,7 @@
                 <value>${test.table.ibb_api_resource}</value>
                 <value>${test.table.ibb_api_param}</value>
                 <value>${test.table.ibb_user_session}</value>
+                <value>${test.table.ibb_child}</value>
             </list>
         </property>
     </bean>

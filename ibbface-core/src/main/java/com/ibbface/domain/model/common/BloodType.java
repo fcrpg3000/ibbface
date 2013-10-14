@@ -25,16 +25,26 @@ public class BloodType extends AbstractValueObject<BloodType>
         implements Comparable<BloodType> {
     private static final long serialVersionUID = 1L;
 
+    public static final BloodType A_BLOOD;
+    public static final BloodType B_BLOOD;
+    public static final BloodType AB_BLOOD;
+    public static final BloodType O_BLOOD;
+    public static final BloodType OTHER;
     private static final Map<Short, BloodType> DATA;
 
     static {
+        A_BLOOD = new BloodType(1, "A", "A blood group");
+        B_BLOOD = new BloodType(2, "B", "B blood group");
+        AB_BLOOD = new BloodType(3, "AB", "AB blood group");
+        O_BLOOD = new BloodType(4, "O", "O blood group");
+        OTHER = new BloodType(5, "其他", "Other");
         ImmutableMap.Builder<Short, BloodType> builder = ImmutableMap.builder();
         DATA = builder
-                .put((short) 1, new BloodType(1, "A", "A blood group"))
-                .put((short) 2, new BloodType(2, "B", "B blood group"))
-                .put((short) 3, new BloodType(3, "AB", "AB blood group"))
-                .put((short) 4, new BloodType(4, "O", "O blood group"))
-                .put((short) 5, new BloodType(5, "其他", "Other"))
+                .put((short) 1, A_BLOOD)
+                .put((short) 2, B_BLOOD)
+                .put((short) 3, AB_BLOOD)
+                .put((short) 4, O_BLOOD)
+                .put((short) 5, OTHER)
                 .build();
     }
 

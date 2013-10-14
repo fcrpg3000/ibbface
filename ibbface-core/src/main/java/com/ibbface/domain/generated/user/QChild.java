@@ -47,17 +47,17 @@ public class QChild extends com.mysema.query.sql.RelationalPathBase<QChild> {
     public final StringPath avatarUri = createString("AVATAR_URI");
     public final StringPath smallAvatarUri = createString("SMALL_AVATAR_URI");
     public final StringPath thumbAvatarUri = createString("THUMB_AVATAR_URI");
-    public final DateTimePath<Timestamp> lastModifiedTime = createDateTime("LAST_MODIFIED_TIME",
-            Timestamp.class);
     public final DateTimePath<Timestamp> createdTime = createDateTime(
             "CREATED_TIME", Timestamp.class);
+    public final DateTimePath<Timestamp> lastModifiedTime = createDateTime("LAST_MODIFIED_TIME",
+            Timestamp.class);
 
     public final PrimaryKey<QChild> primary = createPrimaryKey(id);
 
     public final Path<?>[] sequenceColumns = new Path<?>[] {
             id, userId, petName, realName, genderCode, birthday, lunarBirth,
             constellationId, zodiacId, bloodTypeId, avatarUri, smallAvatarUri,
-            thumbAvatarUri, lastModifiedTime, createdTime
+            thumbAvatarUri, createdTime, lastModifiedTime
     };
 
     public final Path<?>[] columnsWithoutId = Arrays.copyOfRange(

@@ -133,6 +133,15 @@ public class ShiroRealmService extends AuthorizingRealm {
         return String.format("authc_info:%s", token.getPrincipal());
     }
 
+    @Override
+    protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
+        User user = (User) super.getAuthenticationCacheKey(principals);
+        if (user != null) {
+            return String.format("authc_info:%s", user.getEmail());
+        }
+        return principals;
+    }
+
     /**
      * Asserts that the submitted {@code AuthenticationToken}'s credentials match the stored account
      * {@code AuthenticationInfo}'s credentials, and if not, throws an {@link org.apache.shiro.authc.AuthenticationException}.

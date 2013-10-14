@@ -26,6 +26,18 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Child extends BaseChild implements QueryValue {
     private static final long serialVersionUID = 1L;
 
+    public static Child newChild(final Long userId, final String petName,
+                                 final Gender gender) {
+        Child c = new Child(userId);
+        c.setPetName(petName);
+        c.setGender(gender);
+
+        final Date dateNow = new Date();
+        c.setCreatedTime(dateNow);
+        c.setLastModifiedTime(dateNow);
+        return c;
+    }
+
     private Gender gender;
     private Constellation constellation;
     private BloodType bloodType;
@@ -153,7 +165,8 @@ public class Child extends BaseChild implements QueryValue {
         return new Object[]{
                 getId(), getUserId(), getPetName(), getRealName(), getGenderCode(),
                 getBirthday(), getLunarBirth(), getConstellationId(), getZodiacId(),
-                getBloodTypeId(), getAvatarUri(), getSmallAvatarUri(), getThumbAvatarUri()
+                getBloodTypeId(), getAvatarUri(), getSmallAvatarUri(), getThumbAvatarUri(),
+                getCreatedTime(), getLastModifiedTime()
         };
     }
 
