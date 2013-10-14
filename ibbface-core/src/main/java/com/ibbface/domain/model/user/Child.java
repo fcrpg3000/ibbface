@@ -11,6 +11,9 @@ import com.ibbface.domain.model.common.Constellation;
 import com.ibbface.domain.model.common.Zodiac;
 import com.ibbface.domain.model.user.base.BaseChild;
 import com.ibbface.domain.shared.QueryValue;
+import org.joda.time.DateTime;
+
+import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -152,5 +155,41 @@ public class Child extends BaseChild implements QueryValue {
                 getBirthday(), getLunarBirth(), getConstellationId(), getZodiacId(),
                 getBloodTypeId(), getAvatarUri(), getSmallAvatarUri(), getThumbAvatarUri()
         };
+    }
+
+    // logic
+    // --------------------------------------------------------------------------------
+
+    public Child birthday(Date birthday) {
+        checkArgument(birthday != null, "The given `birthday` must be not null.");
+        boolean changed = false;
+        if (nullOrNotSameDay(birthday)) {
+            setBirthday(birthday);
+            changed = true;
+        }
+        if (changed) {
+            // Auto set constellation property base on birthday.
+            Constellation c = Constellation.fromBirthday(getBirthday());
+            setConstellation(c);
+        }
+
+        return this;
+    }
+
+    /**
+     * Returns {@code true} if current birthday is {@code null}, or
+     * given birthday and this birthday is not same day, otherwise {@code false}.
+     *
+     * @param birthday the given new birthday.
+     */
+    private boolean nullOrNotSameDay(final Date birthday) {
+        if (getBirthday() == null) {
+            return true;
+        }
+        DateTime dtOld = new DateTime(getBirthday());
+        DateTime dtNew = new DateTime(birthday);
+        return dtOld.getEra() != dtNew.getEra() ||
+                dtOld.getYear() != dtNew.getYear() ||
+                dtOld.getDayOfYear() != dtNew.getDayOfYear();
     }
 }
