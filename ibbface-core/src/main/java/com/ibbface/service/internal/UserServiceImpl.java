@@ -163,13 +163,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Register new {@link com.ibbface.domain.model.user.User} account newError the specified {@link com.ibbface.domain.model.user.Registration registration}.
+     * Register new {@link com.ibbface.domain.model.user.User} account of the specified
+     * {@link com.ibbface.domain.model.user.Registration registration}.
      *
-     * @param registration the registration info.
-     * @return Returns new user newError the registration.
+     * @param registration the registration info(must be not null).
+     * @return Returns new user of the registration.
+     * @throws IllegalArgumentException if {@code registration == null}.
      */
     @Override
     public User register(Registration registration) {
+        checkArgument(registration != null, "The given `registration` must not be null.");
         return null;
     }
 

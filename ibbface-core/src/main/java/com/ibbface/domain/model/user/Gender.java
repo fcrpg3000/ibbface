@@ -26,6 +26,16 @@ public enum Gender implements ValueObject<Gender> {
     FEMALE(2, "女", "Female", "F"),
 
     /**
+     * 男孩（1）。
+     */
+    BOY(1, "男孩", "Boy", "B"),
+
+    /**
+     * 女孩（2）。
+     */
+    GIRL(2, "女孩", "Girl", "G"),
+
+    /**
      * 保密 (3)。
      */
     UNKNOWN(3, "保密", "Unknown", "N");
@@ -66,7 +76,7 @@ public enum Gender implements ValueObject<Gender> {
      */
     @Override
     public boolean sameValueAs(Gender other) {
-        return other != null && this == other;
+        return other != null && this.code == other.code;
     }
 
     /**
