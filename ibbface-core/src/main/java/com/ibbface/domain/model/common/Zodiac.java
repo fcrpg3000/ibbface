@@ -25,6 +25,7 @@ public class Zodiac extends AbstractValueObject<Zodiac>
         implements Comparable<Zodiac> {
     private static final long serialVersionUID = 1L;
 
+    private static final int RAT_RELATION_MIN = 1900;
     private static final Map<Short, Zodiac> DATA;
 
     static {
@@ -43,6 +44,19 @@ public class Zodiac extends AbstractValueObject<Zodiac>
                 .put((short) 11, new Zodiac(11, "狗", "Dog"))
                 .put((short) 12, new Zodiac(12, "猪", "Boar"))
                 .build();
+    }
+
+    public static Zodiac byYear(int year) {
+        int id;
+        if (year < RAT_RELATION_MIN) {
+            id = (12 - (RAT_RELATION_MIN - year) % 12);
+            id = id == 12 ? 1 : id + 1;
+        } else if (year > RAT_RELATION_MIN) {
+            id = (year - RAT_RELATION_MIN) % 12 + 1;
+        } else {
+            id = 1;
+        }
+        return get(id);
     }
 
     /**

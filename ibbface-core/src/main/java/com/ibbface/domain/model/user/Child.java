@@ -26,8 +26,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Child extends BaseChild implements QueryValue {
     private static final long serialVersionUID = 1L;
 
-    public static Child newChild(final Long userId, final String petName,
-                                 final Gender gender) {
+    public static Child newChild(
+            final Long userId, final String petName, final Gender gender) {
         Child c = new Child(userId);
         c.setPetName(petName);
         c.setGender(gender);
@@ -174,35 +174,39 @@ public class Child extends BaseChild implements QueryValue {
     // --------------------------------------------------------------------------------
 
     public Child birthday(Date birthday) {
-        checkArgument(birthday != null, "The given `birthday` must be not null.");
+        checkArgument(birthday != null, "The given `birth` must be not null.");
         boolean changed = false;
-        if (nullOrNotSameDay(birthday)) {
+        DateTime birth = new DateTime(birthday);
+        if (nullOrNotSameDay(birth)) {
             setBirthday(birthday);
             changed = true;
         }
         if (changed) {
-            // Auto set constellation property base on birthday.
+            // Auto set constellation property base on birth.
             Constellation c = Constellation.fromBirthday(getBirthday());
             setConstellation(c);
+
+            // Auto set zodiac property base on birth year.
+            Zodiac z = Zodiac.byYear(birth.getYear());
+            setZodiac(z);
         }
 
         return this;
     }
 
     /**
-     * Returns {@code true} if current birthday is {@code null}, or
-     * given birthday and this birthday is not same day, otherwise {@code false}.
+     * Returns {@code true} if current birth is {@code null}, or
+     * given birth and this birth is not same day, otherwise {@code false}.
      *
-     * @param birthday the given new birthday.
+     * @param birth the given new birth.
      */
-    private boolean nullOrNotSameDay(final Date birthday) {
+    private boolean nullOrNotSameDay(final DateTime birth) {
         if (getBirthday() == null) {
             return true;
         }
         DateTime dtOld = new DateTime(getBirthday());
-        DateTime dtNew = new DateTime(birthday);
-        return dtOld.getEra() != dtNew.getEra() ||
-                dtOld.getYear() != dtNew.getYear() ||
-                dtOld.getDayOfYear() != dtNew.getDayOfYear();
+        return dtOld.getEra() != birth.getEra() ||
+                dtOld.getYear() != birth.getYear() ||
+                dtOld.getDayOfYear() != birth.getDayOfYear();
     }
 }
