@@ -29,6 +29,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.ibbface</groupId>
             <artifactId>ibbface-core</artifactId>
             <version>1.0.M1</version>
@@ -73,4 +78,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <properties>
+        <guava.version>15.0</guava.version>
+    </properties>
 </project>
