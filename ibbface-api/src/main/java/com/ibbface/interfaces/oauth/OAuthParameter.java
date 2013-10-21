@@ -2,6 +2,8 @@ package com.ibbface.interfaces.oauth;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
+import com.ibbface.domain.validation.Validation;
+import com.ibbface.interfaces.resp.ErrorResponse;
 import com.ibbface.util.turple.Pair;
 import com.ibbface.web.ServletUtils;
 
@@ -10,6 +12,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.google.common.base.Strings.*;
+import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
+import static com.ibbface.interfaces.resp.ErrorCodes.UNSUPPORTED_GRANT_TYPE;
+import static com.ibbface.interfaces.resp.ErrorResponses.byCode;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
 /**
@@ -21,6 +26,7 @@ import static org.apache.commons.codec.binary.Base64.decodeBase64;
 public class OAuthParameter implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    protected static final String DEFAULT_GRANT_TYPE = "authorization_code";
     protected static final String PARAM_CLIENT_ID = "client_id";
     protected static final String PARAM_CLIENT_SECRET = "client_secret";
     protected static final String PARAM_RESPONSE_TYPE = "response_type";
@@ -113,6 +119,35 @@ public class OAuthParameter implements Serializable {
         return code;
     }
 
+    /**
+     * Validates access token API request parameters.
+     *
+     * @param v a Validation.
+     * @param requestURI the current request uri.
+     * @return not {@code null} object if validation has errors, otherwise {@code null}.
+     */
+    public ErrorResponse validateAccessTokenRequest(final Validation v, final String requestURI) {
+        if (v == null) {
+            throw new IllegalArgumentException("The given Validation (v) must not be null.");
+        }
+        v.required(getClientId());
+        v.required(getClientSecret());
+        v.required(getGrantType());
+        v.required(getCode());
+        v.required(getRedirectUri());
+
+        if (v.hasError()) {
+            return byCode(INVALID_REQUEST, requestURI);
+        }
+
+        // grant_type not match?
+        v.required(DEFAULT_GRANT_TYPE.equals(getGrantType()));
+        if (v.hasError()) {
+            return byCode(UNSUPPORTED_GRANT_TYPE, requestURI);
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,11 +155,11 @@ public class OAuthParameter implements Serializable {
 
         OAuthParameter that = (OAuthParameter) o;
 
+        if (redirectUri != null ? !redirectUri.equals(that.redirectUri) : that.redirectUri != null) return false;
         if (clientId != null ? !clientId.equals(that.clientId) : that.clientId != null) return false;
         if (clientSecret != null ? !clientSecret.equals(that.clientSecret) : that.clientSecret != null) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         if (grantType != null ? !grantType.equals(that.grantType) : that.grantType != null) return false;
-        if (redirectUri != null ? !redirectUri.equals(that.redirectUri) : that.redirectUri != null) return false;
         if (responseType != null ? !responseType.equals(that.responseType) : that.responseType != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
 

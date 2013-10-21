@@ -32,6 +32,15 @@
         </property>
     </bean>
 
+    <bean id="appConfigure" class="com.ibbface.config.DefaultAppConfigure" factory-method="getInstance">
+        <property name="mainDomain" value="${app.mainDomain}" />
+        <property name="urlHttpPort" value="${app.url.http.port}" />
+        <property name="urlHttpsPort" value="${app.url.https.port}" />
+        <property name="contextPath" value="${app.contextPath}" />
+        <property name="themeName" value="${app.themeName}" />
+        <property name="devMode" value="${app.devMode}" />
+    </bean>
+
     <bean id="serviceMailSender" class="com.ibbface.domain.model.email.ImmutableMailSender"
             init-method="initialize">
         <constructor-arg index="0" value="${mail.host}" />

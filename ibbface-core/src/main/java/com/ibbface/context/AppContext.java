@@ -5,7 +5,7 @@
 package com.ibbface.context;
 
 import com.google.common.collect.Maps;
-import com.ibbface.domain.model.common.ClientInfo;
+import com.ibbface.domain.model.client.ClientInfo;
 import com.ibbface.web.ServletUtils;
 
 import javax.servlet.http.HttpServletRequest;

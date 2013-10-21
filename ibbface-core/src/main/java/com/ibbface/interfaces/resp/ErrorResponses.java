@@ -13,6 +13,10 @@ public final class ErrorResponses {
     private ErrorResponses() {
     }
 
+    public static ErrorResponse byCode(ErrorCode code, String errorUri) {
+        return DefaultErrorResponse.from(code, errorUri);
+    }
+
     public static ErrorResponse byError(String error, String uri, String description, Object... params) {
         ErrorCode errorCode = ErrorCodes.findByError(error);
         if (errorCode == null) {

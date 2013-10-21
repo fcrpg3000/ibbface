@@ -6,6 +6,7 @@
 package com.ibbface.controller;
 
 import com.google.common.base.Joiner;
+import com.ibbface.domain.validation.Validation;
 import com.ibbface.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,11 @@ import java.util.Locale;
  * @version $Id: BaseController.java 30684 2013-05-28 11:29:25Z C629 $
  * @since 1.0
  */
-public abstract class BaseController implements Serializable {
+public abstract class BaseController implements Serializable, ClearAware {
 
     private static final long serialVersionUID = 1L;
+
+    private static final ThreadLocal<Validation> validations = new ThreadLocal<Validation>();
 
     /**
      * 默认的404视图名称。
@@ -80,6 +83,26 @@ public abstract class BaseController implements Serializable {
 
         final String viewPath = Joiner.on("").join("/", "default", viewName);
         return new ModelAndView(viewPath, model);
+    }
+
+    /**
+     * Returns a {@link Validation} object in current thread.
+     */
+    protected Validation getValidation() {
+        Validation v = validations.get();
+        if (v == null) {
+            v = Validation.newValidation();
+            validations.set(v);
+        }
+        return v;
+    }
+
+    /**
+     * Clear all controller's thread variables.
+     */
+    @Override
+    public void clear() {
+        validations.remove();
     }
 
     /**
