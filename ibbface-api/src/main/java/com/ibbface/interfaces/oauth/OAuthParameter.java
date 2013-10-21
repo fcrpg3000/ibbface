@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.google.common.base.CharMatcher.DIGIT;
 import static com.google.common.base.Strings.*;
 import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
 import static com.ibbface.interfaces.resp.ErrorCodes.UNSUPPORTED_GRANT_TYPE;
@@ -93,6 +94,11 @@ public class OAuthParameter implements Serializable {
 
     public String getClientId() {
         return clientId;
+    }
+
+    public Integer getIntClientId() {
+        return getClientId() != null && DIGIT.matchesAllOf(getClientId()) ?
+                Integer.parseInt(getClientId()) : 0;
     }
 
     public String getClientSecret() {
