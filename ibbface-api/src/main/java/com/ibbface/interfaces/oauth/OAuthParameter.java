@@ -4,15 +4,17 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.ibbface.util.turple.Pair;
 import com.ibbface.web.ServletUtils;
-import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.google.common.base.Strings.*;
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
 /**
+ * The OAuth protocol parameter driver model.
+ *
  * @author Fuchun
  * @since 1.0
  */
@@ -28,35 +30,40 @@ public class OAuthParameter implements Serializable {
     protected static final String PARAM_CODE = "code";
 
     public static OAuthParameter fromRequest(final HttpServletRequest request) {
-        String clientId = ServletUtils.getParameter(request, PARAM_CLIENT_ID);
-        String clientSecret = ServletUtils.getParameter(request, PARAM_CLIENT_SECRET);
-        final String responseType = ServletUtils.getParameter(request, PARAM_RESPONSE_TYPE, PARAM_CODE);
-        final String redirectUri = ServletUtils.getParameter(request, PARAM_REDIRECT_URI);
-        final String grantType = ServletUtils.getParameter(request, PARAM_GRANT_TYPE);
-        final String state = ServletUtils.getParameter(request, PARAM_STATE);
-        final String code = ServletUtils.getParameter(request, PARAM_CODE);
+        final Pair<String, String> clientAuth = getClientAuth(request);
+        final String clientId = clientAuth == null ? null : clientAuth.getLeft();
+        final String clientSecret = clientAuth == null ? null : clientAuth.getRight();
+        final String responseType = emptyToNull(ServletUtils.getParameter(request, PARAM_RESPONSE_TYPE));
+        final String redirectUri = emptyToNull(ServletUtils.getParameter(request, PARAM_REDIRECT_URI));
+        final String grantType = emptyToNull(ServletUtils.getParameter(request, PARAM_GRANT_TYPE));
+        final String state = emptyToNull(ServletUtils.getParameter(request, PARAM_STATE));
+        final String code = emptyToNull(ServletUtils.getParameter(request, PARAM_CODE));
 
-        if (clientId.length() == 0 || clientSecret.length() == 0) {
-            String basic = request.getHeader("Authorization");
-            Pair<String, String> clientInfo = getClientInfo(basic);
-            if (clientInfo != null) {
-                clientId = clientInfo.getKey();
-                clientSecret = clientInfo.getValue();
-            }
-        }
         return new OAuthParameter(clientId, clientSecret, responseType,
                 redirectUri, grantType, state, code);
     }
 
-    protected static Pair<String, String> getClientInfo(final String basic) {
-        if (!isNullOrEmpty(basic) && basic.startsWith("Basic ")) {
-            String clientInfo = new String(Base64.decodeBase64(basic.substring(6)), Charsets.UTF_8);
-            if (!isNullOrEmpty(clientInfo) && clientInfo.contains(":")) {
-                List<String> clientList = Splitter.on(":").splitToList(clientInfo);
-                return Pair.of(clientList.get(0), clientList.get(1));
+    protected static Pair<String, String> getClientAuth(final HttpServletRequest request) {
+        String basic = nullToEmpty(request.getHeader("Authorization")).trim();
+        String clientId = null, clientSecret = null;
+        if (basic.length() == 0) {
+            clientId = emptyToNull(ServletUtils.getParameter(request, PARAM_CLIENT_ID));
+            clientSecret = emptyToNull(ServletUtils.getParameter(request, PARAM_CLIENT_SECRET));
+        } else {
+            if (basic.startsWith("Basic ") && basic.length() > 8) {
+                String clientAuth = new String(decodeBase64(basic.substring(6)), Charsets.UTF_8);
+                if (!isNullOrEmpty(clientAuth)) {
+                    if (clientAuth.contains(":")) {
+                        List<String> clientList = Splitter.on(":").splitToList(clientAuth);
+                        clientId = clientList.get(0);
+                        clientSecret = emptyToNull(clientList.get(1));
+                    } else {
+                        clientId = clientAuth;
+                    }
+                }
             }
         }
-        return null;
+        return clientId != null ? Pair.of(clientId, clientSecret) : null;
     }
 
     private final String clientId;
