@@ -3,11 +3,12 @@
  * @(#) ClientInfo.java 2013-09-03 16:25
  */
 
-package com.ibbface.domain.model.common;
+package com.ibbface.domain.model.client;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.ibbface.domain.model.common.Browser;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.annotation.Nonnull;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ibbface.domain.model.common.ClientOS.*;
+import static com.ibbface.domain.model.client.ClientOS.*;
 
 /**
  * The application client information.
@@ -42,9 +43,9 @@ public abstract class ClientInfo implements Serializable {
 
     /**
      * Returns APP client enumeration object.
-     * if this value equals {@link Client#WEB} or {@link Client#WEB_PE}, {@link #getBrowser()} value is not null.
+     * if this value equals {@link com.ibbface.domain.model.client.ClientType#WEB} or {@link com.ibbface.domain.model.common.Client#WEB_PE}, {@link #getBrowser()} value is not null.
      */
-    public abstract Client getClient();
+    public abstract ClientType getClientType();
 
     /**
      * Returns remote requested client browser, or {@code null} if user used APP client.
@@ -65,13 +66,13 @@ public abstract class ClientInfo implements Serializable {
         private static final long serialVersionUID = 1L;
 
         private final String id;
-        private final Client client;
+        private final ClientType client;
         private final ClientOS clientOS;
         private final Browser browser;
         private final String version;
         private final String model;
 
-        ImmutableClientInfo(String id, Client client, ClientOS clientOS,
+        ImmutableClientInfo(String id, ClientType client, ClientOS clientOS,
                             Browser browser, String version, String model) {
             this.id = id;
             this.client = client;
@@ -99,10 +100,10 @@ public abstract class ClientInfo implements Serializable {
 
         /**
          * Returns APP client enumeration object.
-         * if this value equals {@link com.ibbface.domain.model.common.Client#WEB} or {@link com.ibbface.domain.model.common.Client#WEB_PE}, {@link #getBrowser()} value is not null.
+         * if this value equals {@link com.ibbface.domain.model.client.ClientType#WEB} or {@link com.ibbface.domain.model.client.ClientType#WEB_PE}, {@link #getBrowser()} value is not null.
          */
         @Override
-        public Client getClient() {
+        public ClientType getClientType() {
             return client;
         }
 
@@ -169,20 +170,20 @@ public abstract class ClientInfo implements Serializable {
             String appVer = parts[5];
             String id = parts[6];
             ClientOS clientOS = ClientOS.get(name, version).orNull();
-            Client client = Client.of(name);
-            return new ImmutableClientInfo(id, client, clientOS, null, appVer, model);
+            ClientType clientType = ClientType.of(name);
+            return new ImmutableClientInfo(id, clientType, clientOS, null, appVer, model);
         }
 
         private ImmutableClientInfo parseBrowserUserAgent(String userAgent) {
             String ua = userAgent.trim().toLowerCase();
             Browser browser = Browser.from(ua);
-            Client client = null;
+            ClientType clientType = null;
             ClientOS clientOS = null;
             Matcher m;
             String name, vStr = null, version = null, model = null;
             if (ua.contains(ANDROID) && ua.contains("mozilla")) {
                 name = ANDROID;
-                client = Client.ANDROID;
+                clientType = ClientType.ANDROID;
                 m = ANDROID_OS_PATTERN.matcher(ua);
                 if (m.find()) {
                     vStr = m.group(1);
@@ -254,7 +255,7 @@ public abstract class ClientInfo implements Serializable {
                         Iterables.getLast(parts));
             }
             String id = DigestUtils.md5Hex(ua);
-            return new ImmutableClientInfo(id, client, clientOS, browser, version, model);
+            return new ImmutableClientInfo(id, clientType, clientOS, browser, version, model);
         }
 
         /**
@@ -275,11 +276,12 @@ public abstract class ClientInfo implements Serializable {
 
         /**
          * Returns APP client enumeration object.
-         * if this value equals {@link com.ibbface.domain.model.common.Client#WEB} or {@link com.ibbface.domain.model.common.Client#WEB_PE}, {@link #getBrowser()} value is not null.
+         * if this value equals {@link com.ibbface.domain.model.client.ClientType#WEB} or
+         * {@link com.ibbface.domain.model.client.ClientType#WEB_PE}, {@link #getBrowser()} value is not null.
          */
         @Override
-        public Client getClient() {
-            return clientInfo.getClient();
+        public ClientType getClientType() {
+            return clientInfo.getClientType();
         }
 
         /**

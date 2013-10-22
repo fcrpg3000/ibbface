@@ -3,7 +3,7 @@
  * @(#) ClientOS.java 2013-09-03 17:12
  */
 
-package com.ibbface.domain.model.common;
+package com.ibbface.domain.model.client;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONCreator;

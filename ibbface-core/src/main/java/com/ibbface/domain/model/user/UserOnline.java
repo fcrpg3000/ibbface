@@ -34,9 +34,11 @@ public class UserOnline extends BaseUserOnline implements QueryValue {
         userOnline.setLastLoginTime(loginTime);
         // TODO: generate session id and accessToken
         userOnline.setSessionId(generateSessionId(userId));
-        userOnline.setAccessToken(RandomStrings.random(16, true, true));
+        userOnline.setToken(UserToken.newToken(userId));
         return userOnline;
     }
+
+    private UserToken token;
 
     public UserOnline() {
         super();
@@ -45,6 +47,20 @@ public class UserOnline extends BaseUserOnline implements QueryValue {
     public UserOnline(Long userId) {
         super(userId);
     }
+
+    public UserToken getToken() {
+        return token;
+    }
+
+    public void setToken(UserToken token) {
+        this.token = token;
+        if (token != null) {
+            super.setAccessToken(token.getAccessToken());
+        }
+    }
+
+    // logic
+    // ------------------------------------------------------------------------------------------
 
     /**
      * 使用给定的实体，更新当前实体的信息。通常是已改变的属性的变更。
@@ -83,5 +99,14 @@ public class UserOnline extends BaseUserOnline implements QueryValue {
                 getTotalLoginCount(), getThatLoginCount(), getTotalOnlineTime(),
                 getThatOnlineTime(), getLastAccessedTime()
         };
+    }
+
+    /**
+     * Refresh user token.
+     */
+    public UserOnline refreshToken() {
+        setToken(UserToken.newToken(getUserId()));
+        setLastAccessedTime(System.currentTimeMillis());
+        return this;
     }
 }

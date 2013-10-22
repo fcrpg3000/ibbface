@@ -19,8 +19,8 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 import static com.ibbface.domain.model.user.UserOnline.*;
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 /**
  * QUserOnline is a Querydsl query type for QUserOnline

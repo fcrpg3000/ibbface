@@ -5,7 +5,7 @@
 package com.ibbface.context;
 
 import com.google.common.collect.Maps;
-import com.ibbface.domain.model.common.ClientInfo;
+import com.ibbface.domain.model.client.ClientInfo;
 import com.ibbface.web.ServletUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,6 @@ import static org.springframework.util.StringUtils.hasText;
  * 应用的上下文对象。
  *
  * @author Fuchun
- * @version $Id: AppContext.java 30410 2013-05-28 01:11:32Z C629 $
  * @since 1.0
  */
 public final class AppContext implements Serializable {

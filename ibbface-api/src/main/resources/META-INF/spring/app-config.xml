@@ -32,6 +32,25 @@
         </property>
     </bean>
 
+    <bean id="appConfigure" class="com.ibbface.config.DefaultAppConfigure" factory-method="getInstance">
+        <property name="mainDomain" value="${app.mainDomain}" />
+        <property name="urlHttpPort" value="${app.url.http.port}" />
+        <property name="urlHttpsPort" value="${app.url.https.port}" />
+        <property name="contextPath" value="${app.contextPath}" />
+        <property name="themeName" value="${app.themeName}" />
+        <property name="devMode" value="${app.devMode}" />
+    </bean>
+
+    <bean id="serviceMailSender" class="com.ibbface.domain.model.email.ImmutableMailSender"
+            init-method="initialize">
+        <constructor-arg index="0" value="${mail.host}" />
+        <constructor-arg index="1" value="${mail.port}" />
+        <constructor-arg index="2" value="${mail.client.service.name}" />
+        <constructor-arg index="3" value="${mail.client.service.user}" />
+        <constructor-arg index="4" value="${mail.client.service.password}" />
+        <constructor-arg index="5" value="${mail.client.service.needAuthenticate}" />
+    </bean>
+
     <context:component-scan base-package="com.ibbface.base, com.ibbface.service, com.ibbface.interfaces" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
