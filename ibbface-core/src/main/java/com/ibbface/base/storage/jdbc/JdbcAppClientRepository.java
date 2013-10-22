@@ -6,8 +6,10 @@ import com.ibbface.domain.model.client.AppClient;
 import com.ibbface.repository.client.AppClientRepository;
 import com.mysema.query.sql.RelationalPath;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.expr.SimpleExpression;
+import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,6 +35,16 @@ public class JdbcAppClientRepository extends QueryDslJdbcSupport<AppClient, Inte
         final SQLQuery sqlQuery = getQuery().where(
                 qAppClient.typeCode.eq(typeCode).and(qAppClient.version.eq(version)));
         return queryForObject(sqlQuery);
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+        queryDslJdbcTemplate.delete(getQEntity(), new SqlDeleteCallback() {
+            @Override
+            public long doInSqlDeleteClause(SQLDeleteClause delete) {
+                return delete.execute();
+            }
+        });
     }
 
     @Override

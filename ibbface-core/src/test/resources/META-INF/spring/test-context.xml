@@ -61,6 +61,7 @@
                 <value>${test.table.ibb_api_param}</value>
                 <value>${test.table.ibb_user_session}</value>
                 <value>${test.table.ibb_child}</value>
+                <value>${test.table.ibb_app_client}</value>
             </list>
         </property>
     </bean>

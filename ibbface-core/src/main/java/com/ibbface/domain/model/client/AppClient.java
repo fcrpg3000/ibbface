@@ -4,7 +4,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.ibbface.domain.model.client.base.BaseAppClient;
 import com.ibbface.domain.shared.QueryValue;
+import com.ibbface.util.RandomStrings;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.google.common.base.Objects.equal;
@@ -15,6 +17,46 @@ import static com.google.common.base.Objects.equal;
  */
 public class AppClient extends BaseAppClient implements QueryValue {
     private static final long serialVersionUID = 1L;
+
+    public static String newClientSecret(int count) {
+        return RandomStrings.randomAlphanumeric(count);
+    }
+
+    public static AppClient newIPhone(
+            String version, String versionName, String content,
+            List<String> downloadUrls, List<String> incompatibleVersions,
+            boolean isStable, Date publishTime) {
+        return newClient(ClientType.IPHONE, version, versionName, content,
+                downloadUrls, incompatibleVersions, isStable, publishTime);
+    }
+
+    public static AppClient newAndroid(
+            String version, String versionName, String content,
+            List<String> downloadUrls, List<String> incompatibleVersions,
+            boolean isStable, Date publishTime) {
+        return newClient(ClientType.ANDROID, version, versionName, content,
+                downloadUrls, incompatibleVersions, isStable, publishTime);
+    }
+
+    public static AppClient newClient(
+            ClientType clientType, String version, String versionName,
+            String content, List<String> downloadUrls, List<String> incompatibleVersions,
+            boolean isStable, Date publishTime) {
+        final Date dateNow = new Date();
+        AppClient appClient = new AppClient();
+        appClient.setClientType(clientType);
+        appClient.setClientSecret(newClientSecret(16));
+        appClient.setVersion(version);
+        appClient.setVersionName(versionName);
+        appClient.setUpgradeContent(content);
+        appClient.setDownloadUrlList(downloadUrls);
+        appClient.setIncompatibleVersions(incompatibleVersions);
+        appClient.setStable(isStable);
+        appClient.setPublishTime(publishTime);
+        appClient.setLastModifiedTime(dateNow);
+        appClient.setCreatedTime(dateNow);
+        return appClient;
+    }
 
     private transient ClientType clientType;
     private transient List<String> incompatibleVersions;
@@ -93,9 +135,9 @@ public class AppClient extends BaseAppClient implements QueryValue {
     @Override
     public Object[] toArray() {
         return new Object[] {
-                getId(), getTypeCode(), getVersion(), getVersionName(), getUpgradeContent(),
-                getDownloadUrls(), getIncompatibleData(), isStable(), getPublishTime(),
-                getLastModifiedTime(), getCreatedTime()
+                getId(), getClientSecret(), getTypeCode(), getVersion(), getVersionName(),
+                getUpgradeContent(), getDownloadUrls(), getIncompatibleData(), isStable(),
+                getPublishTime(), getLastModifiedTime(), getCreatedTime()
         };
     }
 
