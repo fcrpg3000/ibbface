@@ -88,6 +88,10 @@ public enum ClientType implements ValueObject<ClientType> {
         return other != null && this == other;
     }
 
+    public boolean isWeb() {
+        return WEB == this || WEB_PE == this;
+    }
+
     /**
      * Returns this enum object JSON string.
      * <p/>

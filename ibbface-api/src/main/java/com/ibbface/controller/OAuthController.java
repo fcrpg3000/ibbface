@@ -47,6 +47,7 @@ public class OAuthController extends BaseController {
             return view("/auth/authorize_error.ftl", model);
         }
 
+        model.put("oauth", oAuthParam);
         return view("/auth/authorize.ftl", model);
     }
 

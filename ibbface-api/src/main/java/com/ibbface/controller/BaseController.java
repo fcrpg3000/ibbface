@@ -6,6 +6,9 @@
 package com.ibbface.controller;
 
 import com.google.common.base.Joiner;
+import com.ibbface.config.AppConfigure;
+import com.ibbface.context.AppContext;
+import com.ibbface.domain.model.client.ClientInfo;
 import com.ibbface.domain.validation.Validation;
 import com.ibbface.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
@@ -54,6 +57,9 @@ public abstract class BaseController implements Serializable, ClearAware {
 //    @Resource
 //    protected AppConfigExt appConfig;
 
+    @Resource
+    protected AppConfigure appConfigure;
+
     protected ResourceBundleMessageSource messageSource;
 
     /**
@@ -81,7 +87,17 @@ public abstract class BaseController implements Serializable, ClearAware {
             model = new ModelMap();
         }
 
-        final String viewPath = Joiner.on("").join("/", "default", viewName);
+        final ClientInfo clientInfo = AppContext.getClientInfo();
+        String platform;
+        if (clientInfo == null || clientInfo.getClientType().isWeb()) { // web
+            platform = "web";
+        } else if (clientInfo.getClientType().isMobile()) {
+            platform = "mobile";
+        } else { // pad
+            platform = "pad";
+        }
+        final String viewPath = Joiner.on("").join("/", platform,
+                "/", appConfigure.getTheme().getName(), viewName);
         return new ModelAndView(viewPath, model);
     }
 
