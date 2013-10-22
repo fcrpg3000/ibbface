@@ -20,6 +20,7 @@ public class DefaultAppConfigure implements AppConfigure {
     private String mainDomain;
     private String topPrivateDomain;
     private String cookieDomain;
+    private String staticDomain;
     private String urlHttpPort = DEFAULT_URL_HTTP_PORT;
     private String urlHttpsPort = DEFAULT_URL_HTTPS_PORT;
     private String contextPath = "/";
@@ -27,6 +28,12 @@ public class DefaultAppConfigure implements AppConfigure {
     private String urlHttpsPrefix;
     private Theme theme;
     private boolean isDevMode = false;
+
+    private String imagesUrl;
+    private String stylesUrl;
+    private String scriptsUrl;
+    private String skinImagesUrl;
+    private String skinStylesUrl;
 
     DefaultAppConfigure() {
         setMainDomain("api.ibbface.com");
@@ -80,6 +87,15 @@ public class DefaultAppConfigure implements AppConfigure {
     }
 
     @Override
+    public String getStaticDomain() {
+        return staticDomain;
+    }
+
+    public void setStaticDomain(String staticDomain) {
+        this.staticDomain = staticDomain;
+    }
+
+    @Override
     public String getUrlHttpPort() {
         return urlHttpPort;
     }
@@ -130,6 +146,53 @@ public class DefaultAppConfigure implements AppConfigure {
         return urlHttpsPrefix;
     }
 
+    @Override
+    public String getImagesUrl() {
+        if (imagesUrl == null) {
+            imagesUrl = buildStaticUrl("/images");
+        }
+        return imagesUrl;
+    }
+
+    @Override
+    public String getStylesUrl() {
+        if (stylesUrl == null) {
+            stylesUrl = buildStaticUrl("/styles");
+        }
+        return stylesUrl;
+    }
+
+    @Override
+    public String getScriptsUrl() {
+        if (scriptsUrl == null) {
+            scriptsUrl = buildStaticUrl("/scripts");
+        }
+        return scriptsUrl;
+    }
+
+    private String buildStaticUrl(final String ctxPath) {
+        return Joiner.on("").join("http://",
+                getStaticDomain(),
+                (DEFAULT_URL_HTTP_PORT.equals(getUrlHttpPort()) ? "" : ":" + getUrlHttpPort()),
+                ctxPath);
+    }
+
+    @Override
+    public String getSkinImagesUrl() {
+        if (skinImagesUrl == null) {
+            skinImagesUrl = Joiner.on("/").join(getImagesUrl(), "skins", getTheme().getName());
+        }
+        return skinImagesUrl;
+    }
+
+    @Override
+    public String getSkinStylesUrl() {
+        if (skinStylesUrl == null) {
+            skinStylesUrl = Joiner.on("/").join(getStylesUrl(), "skins", getTheme().getName());
+        }
+        return skinStylesUrl;
+    }
+
     public Theme getTheme() {
         return theme;
     }
@@ -157,6 +220,7 @@ public class DefaultAppConfigure implements AppConfigure {
                 "mainDomain='" + getMainDomain() + '\'' +
                 ", topPrivateDomain='" + getTopPrivateDomain() + '\'' +
                 ", cookieDomain='" + getCookieDomain() + '\'' +
+                ", staticDomain='" + getStaticDomain() + '\'' +
                 ", urlHttpPort='" + getUrlHttpPort() + '\'' +
                 ", urlHttpsPort='" + getUrlHttpsPort() + '\'' +
                 ", contextPath='" + getContextPath() + '\'' +

@@ -26,6 +26,11 @@ public interface AppConfigure extends Serializable {
     public String getCookieDomain();
 
     /**
+     * Returns this App static resource url prefix. e.g. img.ibbface.com
+     */
+    public String getStaticDomain();
+
+    /**
      * Returns this App url http port. Default: 80.
      */
     public String getUrlHttpPort();
@@ -57,6 +62,31 @@ public interface AppConfigure extends Serializable {
      * NOTE: In dev mode, This value may be https://127.0.0.1:8443/ibbface-api
      */
     public String getUrlHttpsPrefix();
+
+    /**
+     * Returns this App images url prefix. like http://static.ibbface.com/images
+     */
+    public String getImagesUrl();
+
+    /**
+     * Returns this App styles url prefix. like http://static.ibbface.com/styles
+     */
+    public String getStylesUrl();
+
+    /**
+     * Returns this App scripts url prefix. like http://static.ibbface.com/scripts
+     */
+    public String getScriptsUrl();
+
+    /**
+     * Returns this App current skin image url prefix. like http://static.ibbface.com/images/skins/default
+     */
+    public String getSkinImagesUrl();
+
+    /**
+     * Returns this App current skin styles url prefix. like http://static.ibbface.com/styles/skins/default
+     */
+    public String getSkinStylesUrl();
 
     /**
      * Returns this App UI theme.

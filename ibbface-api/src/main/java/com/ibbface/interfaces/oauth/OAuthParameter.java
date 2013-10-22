@@ -125,6 +125,20 @@ public class OAuthParameter implements Serializable {
         return code;
     }
 
+    public ErrorResponse validateAuthorizeRequest(final Validation v, final String requestURI) {
+        if (v == null) {
+            throw new IllegalArgumentException("The given Validation (v) must not be null.");
+        }
+        v.required(getClientId());
+        v.required(getRedirectUri());
+        v.required(getResponseType());
+
+        if (v.hasError()) {
+            return byCode(INVALID_REQUEST, requestURI);
+        }
+        return null;
+    }
+
     /**
      * Validates access token API request parameters.
      *

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>爱童颜社区 － 用户登录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" media="screen" href="../../../../styles/common/bs3.min.css" />
+<link rel="stylesheet" media="screen" href="../../../../styles/common/base.css" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../../../../scripts/libs/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<div class="container">
+    <div class="panel panel-primary">
+        <!--<div class="panel-heading"><h2 class="panel-title">登录爱童颜社区</h2></div>-->
+        <div class="panel-body">
+            <form id="form_login" name="formLogin" method="post" action="authorize.html">
+                <input type="hidden" name="client_id" />
+                <input type="hidden" name="redirect_uri" />
+                <input type="hidden" name="grant_type" />
+                <input type="hidden" name="state" />
+                <input type="text" id="txt_account" name="account" class="form-control"
+                       placeholder="请输入登录帐号(邮箱|手机号)" autofocus="true" required />
+                <input type="text" id="txt_password" name="password" class="form-control"
+                       placeholder="请输入登录密码" />
+                <label class="checkbox">
+                    <input type="checkbox" name="rememberMe" value="true" /> 记住登录信息
+                </label>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登 录</button>
+            </form>
+        </div>
+        <div class="panel-footer">
+            &copy; 2013-2014 爱童颜社区
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../../../scripts/libs/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../../../../scripts/libs/bs3.js"></script>
+</body>
+</html>

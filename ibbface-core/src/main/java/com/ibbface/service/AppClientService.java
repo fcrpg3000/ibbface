@@ -8,5 +8,7 @@ import com.ibbface.domain.model.client.AppClient;
  */
 public interface AppClientService {
 
+    public boolean isValid(Integer id);
+
     public AppClient getAppClient(Integer id);
 }

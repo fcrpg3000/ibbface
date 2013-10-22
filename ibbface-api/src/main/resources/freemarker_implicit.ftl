@@ -1,0 +1,7 @@
+[#ftl]
+[#-- @implicitly included --]
+[#-- @ftlroot "../webapp/WEB-INF/content" --]
+[#-- @ftlvariable name="pageScripts" type="java.lang.String" --]
+[#-- @ftlvariable name="pageCss" type="java.lang.String" --]
+[#-- @ftlvariable name="pageTitle" type="java.lang.String" --]
+[#-- @ftlvariable name="appConfigure" type="com.ibbface.config.AppConfigure" --]
