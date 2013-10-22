@@ -13,7 +13,9 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 /**
  * QUserInfo is a Querydsl query type for QUserInfo
+ * @deprecated USER_INFO table deleted.
  */
+@Deprecated
 @Generated("com.mysema.query.sql.codegen.MetaDataSerializer")
 public class QUserInfo extends com.mysema.query.sql.RelationalPathBase<QUserInfo> {
 
