@@ -19,6 +19,14 @@ public class AppClientServiceImpl implements AppClientService {
     private AppClientRepository appClientRepository;
 
     @Override
+    public boolean isValid(Integer id) {
+        if (id == null || id <= 0) {
+            return false;
+        }
+        return appClientRepository.exists(id);
+    }
+
+    @Override
     public AppClient getAppClient(Integer id) {
         checkArgument(id != null, "The given app client id must not be null.");
         assert id != null;

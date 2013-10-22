@@ -87,6 +87,8 @@ public abstract class BaseController implements Serializable, ClearAware {
             model = new ModelMap();
         }
 
+        model.put("appConfigure", appConfigure);
+
         final ClientInfo clientInfo = AppContext.getClientInfo();
         String platform;
         if (clientInfo == null || clientInfo.getClientType().isWeb()) { // web
@@ -96,6 +98,7 @@ public abstract class BaseController implements Serializable, ClearAware {
         } else { // pad
             platform = "pad";
         }
+
         final String viewPath = Joiner.on("").join("/", platform,
                 "/", appConfigure.getTheme().getName(), viewName);
         return new ModelAndView(viewPath, model);

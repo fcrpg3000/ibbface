@@ -34,6 +34,7 @@
 
     <bean id="appConfigure" class="com.ibbface.config.DefaultAppConfigure" factory-method="getInstance">
         <property name="mainDomain" value="${app.mainDomain}" />
+        <property name="staticDomain" value="${app.staticDomain}" />
         <property name="urlHttpPort" value="${app.url.http.port}" />
         <property name="urlHttpsPort" value="${app.url.https.port}" />
         <property name="contextPath" value="${app.contextPath}" />

@@ -41,9 +41,17 @@ public class OAuthController extends BaseController {
     @RequestMapping(value = "/authorize", method = RequestMethod.GET)
     public ModelAndView authorize(HttpServletRequest request, ModelMap model) {
         final OAuthParameter oAuthParam = OAuthParameter.fromRequest(request);
+        final String requestURI = request.getRequestURI();
+        ErrorResponse errorResponse = oAuthParam.validateAuthorizeRequest(getValidation(), requestURI);
 
+        if (errorResponse == null) {
+            if (!appClientService.isValid(oAuthParam.getIntClientId())) {
+                errorResponse = byCode(INVALID_CLIENT, requestURI);
+            }
+        }
         // authorize parameters error
-        if (oAuthParam.getClientId() == null || oAuthParam.getRedirectUri() == null) {
+        if (errorResponse != null) {
+            model.put("errorResponse", errorResponse);
             return view("/auth/authorize_error.ftl", model);
         }
 
