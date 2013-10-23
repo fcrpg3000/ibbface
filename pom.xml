@@ -931,7 +931,7 @@
         <!-- global dependency library version -->
         <junit.version>4.11</junit.version>
         <spring.version>3.2.4.RELEASE</spring.version>
-        <spring.data.commons.version>1.5.2.RELEASE</spring.data.commons.version>
+        <spring.data.commons.version>1.6.1.RELEASE</spring.data.commons.version>
         <slf4j.version>1.7.5</slf4j.version>
         <logback.version>1.0.12</logback.version>
         <druid.version>0.2.23</druid.version>
