@@ -17,6 +17,7 @@ import com.google.common.io.Closer;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.ibbface.security.crypto.AES;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -64,8 +65,9 @@ public class SecurityPropertyPlaceholderConfigurer extends PropertyPlaceholderCo
         Matcher m = CIPHER_TEXT_PATTERN.matcher(propertyValue);
         if (m.find()) {
             String cipherText = m.group(1);
-            String sourceText = AES.ecbPKCS5Padding((DEFAULT_PROPERTY_VALUE_KEY +
-                    propertyName).getBytes()).decryptHex2String(cipherText);
+            String sourceText = AES.ecbPKCS5Padding(
+                    DigestUtils.md5(DEFAULT_PROPERTY_VALUE_KEY + propertyName)
+            ).decryptHex2String(cipherText);
             if (sourceText != null) {
                 propertyValue = sourceText;
             } else {
@@ -139,8 +141,9 @@ public class SecurityPropertyPlaceholderConfigurer extends PropertyPlaceholderCo
             if (!m.find()) {
 
                 value = Joiner.on("").join(VALUE_PREFIX,
-                        AES.ecbPKCS5Padding((DEFAULT_PROPERTY_VALUE_KEY +
-                                key).getBytes()).encryptString(srcValue), VALUE_SUFFIX);
+                        AES.ecbPKCS5Padding(
+                                DigestUtils.md5(DEFAULT_PROPERTY_VALUE_KEY + key)
+                        ).encryptString(srcValue), VALUE_SUFFIX);
                 hasEncrypted = true;
                 outputLines.add(String.format("%s=%s", key, value));
                 if (LOGGER.isDebugEnabled()) {

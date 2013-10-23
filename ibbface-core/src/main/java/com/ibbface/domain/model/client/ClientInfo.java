@@ -177,13 +177,12 @@ public abstract class ClientInfo implements Serializable {
         private ImmutableClientInfo parseBrowserUserAgent(String userAgent) {
             String ua = userAgent.trim().toLowerCase();
             Browser browser = Browser.from(ua);
-            ClientType clientType = null;
+            ClientType clientType = ClientType.WEB;
             ClientOS clientOS = null;
             Matcher m;
             String name, vStr = null, version = null, model = null;
             if (ua.contains(ANDROID) && ua.contains("mozilla")) {
                 name = ANDROID;
-                clientType = ClientType.ANDROID;
                 m = ANDROID_OS_PATTERN.matcher(ua);
                 if (m.find()) {
                     vStr = m.group(1);

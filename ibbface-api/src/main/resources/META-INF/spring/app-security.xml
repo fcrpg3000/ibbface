@@ -40,7 +40,7 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager" />
-        <property name="loginUrl" value="/auth/authorize" />
+        <property name="loginUrl" value="/oauth/authorize" />
         <property name="successUrl" value="/" />
         <property name="filters">
             <map key-type="java.lang.String">
@@ -49,6 +49,7 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
+                /oauth/authorize = authc
                 /admin/** = roles[Admin]
                 /** = anon
             </value>

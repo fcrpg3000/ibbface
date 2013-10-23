@@ -174,7 +174,7 @@ public class DefaultAppConfigure implements AppConfigure {
         return Joiner.on("").join("http://",
                 getStaticDomain(),
                 (DEFAULT_URL_HTTP_PORT.equals(getUrlHttpPort()) ? "" : ":" + getUrlHttpPort()),
-                ctxPath);
+                getContextPath(), ctxPath);
     }
 
     @Override
