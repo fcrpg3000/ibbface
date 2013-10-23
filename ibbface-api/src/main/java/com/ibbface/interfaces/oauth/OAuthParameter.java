@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.google.common.base.CharMatcher.DIGIT;
 import static com.google.common.base.Strings.*;
+import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
 import static com.ibbface.interfaces.resp.ErrorCodes.UNSUPPORTED_GRANT_TYPE;
 import static com.ibbface.interfaces.resp.ErrorResponses.byCode;
@@ -51,7 +52,7 @@ public class OAuthParameter implements Serializable {
     }
 
     protected static Pair<String, String> getClientAuth(final HttpServletRequest request) {
-        String basic = nullToEmpty(request.getHeader("Authorization")).trim();
+        String basic = nullToEmpty(request.getHeader(AUTHORIZATION)).trim();
         String clientId = null, clientSecret = null;
         if (basic.length() == 0) {
             clientId = emptyToNull(ServletUtils.getParameter(request, PARAM_CLIENT_ID));
@@ -145,6 +146,7 @@ public class OAuthParameter implements Serializable {
      * @param v a Validation.
      * @param requestURI the current request uri.
      * @return not {@code null} object if validation has errors, otherwise {@code null}.
+     * @throws IllegalArgumentException if {@code Validation}(v) is null.
      */
     public ErrorResponse validateAccessTokenRequest(final Validation v, final String requestURI) {
         if (v == null) {

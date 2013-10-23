@@ -1,4 +1,4 @@
-package com.ibbface.interceptor;
+package com.ibbface.interfaces.web;
 
 import com.ibbface.controller.ClearAware;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

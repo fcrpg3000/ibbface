@@ -22,9 +22,11 @@ import static com.ibbface.interfaces.resp.ErrorResponses.byError;
 /**
  * @author Fuchun
  * @since 1.0
+ * @deprecated use {@link OAuthController}
  */
 @Controller
 @RequestMapping("/auth")
+@Deprecated
 public class RestAuthController extends BaseController {
     private static final long serialVersionUID = 1L;
 
