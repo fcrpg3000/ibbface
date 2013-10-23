@@ -38,7 +38,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean class="com.ibbface.interceptor.GlobalInterceptor"/>
+            <bean class="com.ibbface.interfaces.web.GlobalInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

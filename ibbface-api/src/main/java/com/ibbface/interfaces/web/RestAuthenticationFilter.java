@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Fuchun
  * @since 1.0
+ * @deprecated not used.
  */
+@Deprecated
 public class RestAuthenticationFilter extends FormAuthenticationFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
