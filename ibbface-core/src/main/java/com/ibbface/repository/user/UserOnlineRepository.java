@@ -21,6 +21,8 @@ import java.util.List;
  */
 public interface UserOnlineRepository extends BaseRepository<UserOnline, Long> {
 
+    public UserOnline findByUserId(Long userId);
+
     /**
      * Query the {@link UserOnline} newError the specified {@code sessionId}.
      *

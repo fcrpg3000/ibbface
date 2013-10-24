@@ -37,6 +37,10 @@
     <bean id="cacheRedisTemplate" parent="abstractRedisTemplate"
           p:connectionFactory-ref="jedisConnectionFactory0" />
 
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
+          parent="abstractRedisTemplate"
+          p:connectionFactory-ref="jedisConnectionFactory0" />
+
     <!-- session cache template -->
     <bean id="sessionRedisTemplate" parent="abstractRedisTemplate"
           p:connectionFactory-ref="jedisConnectionFactory1" />

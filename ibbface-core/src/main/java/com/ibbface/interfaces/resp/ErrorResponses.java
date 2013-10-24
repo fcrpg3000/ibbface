@@ -5,6 +5,8 @@
 
 package com.ibbface.interfaces.resp;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Fuchun
  * @since 1.0
@@ -13,6 +15,7 @@ public final class ErrorResponses {
     private ErrorResponses() {
     }
 
+    @Nonnull
     public static ErrorResponse byCode(ErrorCode code, String errorUri) {
         return DefaultErrorResponse.from(code, errorUri);
     }

@@ -16,6 +16,7 @@ import static com.google.common.base.Strings.*;
 import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static com.ibbface.interfaces.resp.ErrorCodes.INVALID_REQUEST;
 import static com.ibbface.interfaces.resp.ErrorCodes.UNSUPPORTED_GRANT_TYPE;
+import static com.ibbface.interfaces.resp.ErrorCodes.UNSUPPORTED_RESPONSE_TYPE;
 import static com.ibbface.interfaces.resp.ErrorResponses.byCode;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
@@ -28,6 +29,7 @@ import static org.apache.commons.codec.binary.Base64.decodeBase64;
 public class OAuthParameter implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final String DEFAULT_RESPONSE_TYPE_VALUE = "code";
     protected static final String DEFAULT_GRANT_TYPE = "authorization_code";
     protected static final String PARAM_CLIENT_ID = "client_id";
     protected static final String PARAM_CLIENT_SECRET = "client_secret";
@@ -135,7 +137,14 @@ public class OAuthParameter implements Serializable {
         v.required(getResponseType());
 
         if (v.hasError()) {
+            v.clear();
             return byCode(INVALID_REQUEST, requestURI);
+        }
+
+        v.required(DEFAULT_RESPONSE_TYPE_VALUE.equals(getResponseType()));
+        if (v.hasError()) {
+            v.clear();
+            return byCode(UNSUPPORTED_RESPONSE_TYPE, requestURI);
         }
         return null;
     }

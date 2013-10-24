@@ -18,6 +18,7 @@ public interface ErrorCode extends Serializable {
     // Service error name constants
     // ----------------------------------------------------------------------------------
     String AUTH_FAILED = "auth_failed";
+    String USER_NOT_FOUND = "user_not_found";
     String USERNAME_OR_PASSWORD_ERROR = "username_or_password_error";
     String AUTH_LIMIT = "auth_limit";
 

@@ -92,7 +92,7 @@ public abstract class BaseController implements Serializable, ClearAware {
         final ClientInfo clientInfo = AppContext.getClientInfo();
         String platform;
         if (clientInfo == null || clientInfo.getClientType().isWeb()) { // web
-            platform = "web";
+            platform = "mobile";
         } else if (clientInfo.getClientType().isMobile()) {
             platform = "mobile";
         } else { // pad

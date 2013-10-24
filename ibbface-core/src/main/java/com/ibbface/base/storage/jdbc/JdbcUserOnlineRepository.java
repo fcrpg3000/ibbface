@@ -84,6 +84,11 @@ public class JdbcUserOnlineRepository extends QueryDslJdbcSupport<UserOnline, Lo
     }
 
     @Override
+    public UserOnline findByUserId(Long userId) {
+        return queryForObject(getQuery().where(qUserOnline.userId.eq(userId)));
+    }
+
+    @Override
     public UserOnline findBySessionId(String sessionId) {
         return queryForObject(getQuery().where(qUserOnline.sessionId.eq(sessionId)));
     }

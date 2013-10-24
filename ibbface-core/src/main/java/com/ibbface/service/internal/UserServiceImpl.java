@@ -7,12 +7,10 @@ package com.ibbface.service.internal;
 
 import com.ibbface.domain.exception.AccountNotFoundException;
 import com.ibbface.domain.exception.UnauthorizedException;
-import com.ibbface.domain.model.user.BannedUser;
-import com.ibbface.domain.model.user.Operator;
-import com.ibbface.domain.model.user.Registration;
-import com.ibbface.domain.model.user.User;
+import com.ibbface.domain.model.user.*;
 import com.ibbface.domain.validation.Validator;
 import com.ibbface.repository.user.BannedUserRepository;
+import com.ibbface.repository.user.UserOnlineRepository;
 import com.ibbface.repository.user.UserRepository;
 import com.ibbface.service.UserService;
 import org.apache.shiro.authc.LockedAccountException;
@@ -33,11 +31,33 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private UserOnlineRepository userOnlineRepository;
     private BannedUserRepository bannedUserRepository;
 
     private void checkUserId(Long userId) {
         checkArgument(userId != null && userId > 0,
                 "The given `userId` must not be null, 0 or negative!");
+    }
+
+    @Override
+    public String getCodeForAuthorizing(Long userId) {
+
+        return null;
+    }
+
+    @Override
+    public Long getUserIdByAccessToken(String accessToken) {
+        UserOnline userOnline = userOnlineRepository.findByAccessToken(accessToken);
+        if (userOnline == null) {
+            return null;
+        }
+        return userOnline.getUserId();
+    }
+
+    @Override
+    public User getUser(Long userId) {
+        checkUserId(userId);
+        return userRepository.findOne(userId);
     }
 
     /**

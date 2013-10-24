@@ -42,9 +42,9 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <mvc:resources mapping="/scripts/**" location="/scripts/"/>
-    <mvc:resources mapping="/images/**" location="/images/"/>
-    <mvc:resources mapping="/styles/**" location="/styles/"/>
+    <mvc:resources mapping="**/scripts/**" location="/scripts/"/>
+    <mvc:resources mapping="**/images/**" location="/images/"/>
+    <mvc:resources mapping="**/styles/**" location="/styles/"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"

@@ -66,7 +66,7 @@ public class SecurityPropertyPlaceholderConfigurer extends PropertyPlaceholderCo
         if (m.find()) {
             String cipherText = m.group(1);
             String sourceText = AES.ecbPKCS5Padding(
-                    DigestUtils.md5(DEFAULT_PROPERTY_VALUE_KEY + propertyName)
+                    DigestUtils.md5Hex(DEFAULT_PROPERTY_VALUE_KEY + propertyName).getBytes()
             ).decryptHex2String(cipherText);
             if (sourceText != null) {
                 propertyValue = sourceText;
@@ -142,7 +142,7 @@ public class SecurityPropertyPlaceholderConfigurer extends PropertyPlaceholderCo
 
                 value = Joiner.on("").join(VALUE_PREFIX,
                         AES.ecbPKCS5Padding(
-                                DigestUtils.md5(DEFAULT_PROPERTY_VALUE_KEY + key)
+                                DigestUtils.md5Hex(DEFAULT_PROPERTY_VALUE_KEY + key).getBytes()
                         ).encryptString(srcValue), VALUE_SUFFIX);
                 hasEncrypted = true;
                 outputLines.add(String.format("%s=%s", key, value));

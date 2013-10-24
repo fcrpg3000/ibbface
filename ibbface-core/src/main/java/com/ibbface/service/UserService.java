@@ -19,15 +19,43 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserService {
 
     /**
-     * Returns the {@link User} newError the specified email or mobile number,
-     * or {@code null} if there are none newError the specified email or mobile.
+     * Generates and return {@code code} with specified user id.
+     *
+     * @param userId user id.
+     * @return a new code for authorizing.
+     */
+    public String getCodeForAuthorizing(Long userId);
+
+    /**
+     * Returns the {@code userId} with the specified bounded access token,
+     * or {@code null} if there is none with specified access token.
+     *
+     * @param accessToken the user access token string.
+     * @return the userId with the bounded access token.
+     */
+    public Long getUserIdByAccessToken(String accessToken);
+
+    /**
+     * Returns the {@link User} with the specified user id, or {@code null} if
+     * there are none with the specified user id.
+     *
+     * @param userId user id.
+     * @return the {@link User} with the specified user id, or {@code null} if
+     *         there are none with the specified user id.
+     * @throws IllegalArgumentException if the specified {@code userId} is null or negative.
+     */
+    public User getUser(Long userId);
+
+    /**
+     * Returns the {@link User} with the specified email or mobile number,
+     * or {@code null} if there are none with the specified email or mobile.
      * <p/>
      * In any case will return the {@link User user}, as long as it is present.
      * If the caller needs to automatically check whether the user is enabled,
      * the caller can invoke {@link #getEnabledUser(String)} method.
      *
      * @param emailOrMobile the user email or mobile number.
-     * @return the {@link User user} newError the specified email or mobile number, or {@code null}
+     * @return the {@link User user} with the specified email or mobile number, or {@code null}
      *         if no email or mobile number newError the user.
      */
     public User getUser(String emailOrMobile);

@@ -92,8 +92,8 @@ public final class ErrorCodes {
     public static final ErrorCode IP_LIMIT = newError("10004", "ip_limit", "IP limit");
     public static final ErrorCode PERMISSION_DENIED = newError("10005", "permission_denied",
             "Permission denied. need a high level client_id");
-    public static final ErrorCode MISS_CLIENT_ID = newError("10006", "miss_client_id",
-            "The client id is missing");
+    public static final ErrorCode MISS_APP_KEY = newError("10006", "miss_app_key",
+            "Source paramter (appkey) is missing");
     public static final ErrorCode UNSUPPORTED_MEDIA_TYPE = newError("10007", "unsupported_media_type",
             "Unsupported media type (%s)");
     public static final ErrorCode PARAM_ERROR = newError("10008", "param_error",
@@ -105,7 +105,7 @@ public final class ErrorCodes {
     public static final ErrorCode ILLEGAL_REQUEST = newError("10012", "illegal_request", "Illegal request");
     public static final ErrorCode INVALID_USER = newError("10013", "invalid_user", "Invalid user");
     public static final ErrorCode INVALID_PERMISSION = newError("10014", "invalid_permission", "Invalid Permission");
-    public static final ErrorCode REQUIRED_PARAMS = newError("10016", "required_params", "Miss reqired (100%)," +
+    public static final ErrorCode REQUIRED_PARAMS = newError("10016", "required_params", "Miss required (100%)," +
             "parameters(%s), see doc for more info.");
     public static final ErrorCode ILLEGAL_PARAM = newError("10017", "illegal_param", "Parameter(%s) value " +
             "invalid, expect(%s), but get (%s), see doc for more info.");

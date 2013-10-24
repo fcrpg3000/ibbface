@@ -12,12 +12,27 @@
     <bean id="restAuthenticationFilter" class="com.ibbface.interfaces.web.RestAuthenticationFilter">
     </bean>
 
+    <!-- oauth access token filter -->
+    <bean id="oAuthAccessTokenFilter" class="com.ibbface.interfaces.oauth.OAuthAccessTokenFilter">
+        <property name="userService" ref="userService" />
+    </bean>
+
+    <bean id="oAuthFormAuthenticationFilter" class="com.ibbface.interfaces.oauth.OAuthFormAuthenticationFilter">
+    </bean>
+
     <bean id="shiroRedisCacheManager" class="com.ibbface.base.cache.shiro.ShiroRedisCacheManager">
         <constructor-arg ref="sessionRedisTemplate" />
     </bean>
 
     <bean id="shiroRealmService" class="com.ibbface.interfaces.realm.ShiroRealmService">
         <constructor-arg index="0" ref="userService" />
+        <property name="authenticationCachingEnabled" value="true" />
+        <property name="cacheManager" ref="shiroRedisCacheManager" />
+        <property name="credentialsMatcher" ref="userCredentialsMatcher" />
+    </bean>
+
+    <bean id="oAuthRealmService" class="com.ibbface.interfaces.oauth.OAuthRealmService">
+        <property name="userService" ref="userService" />
         <property name="authenticationCachingEnabled" value="true" />
         <property name="cacheManager" ref="shiroRedisCacheManager" />
         <property name="credentialsMatcher" ref="userCredentialsMatcher" />
@@ -30,7 +45,7 @@
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealmService" />
+        <property name="realm" ref="oAuthRealmService" />
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
@@ -44,14 +59,16 @@
         <property name="successUrl" value="/" />
         <property name="filters">
             <map key-type="java.lang.String">
-                <entry key="authc" value-ref="restAuthenticationFilter" />
+                <entry key="oauthForm" value-ref="oAuthFormAuthenticationFilter" />
+                <entry key="oauthToken" value-ref="oAuthAccessTokenFilter" />
             </map>
         </property>
         <property name="filterChainDefinitions">
             <value>
                 /oauth/authorize = authc
-                /admin/** = roles[Admin]
-                /** = anon
+                /oauth/authorize = oauthForm
+                /admin/** = noSessionCreation, oauthToken, roles[admin]
+                /** = noSessionCreation, oauthToken
             </value>
         </property>
     </bean>

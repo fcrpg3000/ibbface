@@ -24,12 +24,12 @@
                 <value>classpath:/META-INF/config/app-database.properties</value>
             </list>
         </property>
-        <property name="encryptProps">
+        <!--property name="encryptProps">
             <set>
                 <value>dataSource.username</value>
                 <value>dataSource.password</value>
             </set>
-        </property>
+        </property-->
     </bean>
 
     <bean id="appConfigure" class="com.ibbface.config.DefaultAppConfigure" factory-method="getInstance">
